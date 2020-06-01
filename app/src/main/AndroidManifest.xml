@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="xyz.aprildown.torch">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
     <application
         android:allowBackup="true"
         android:fullBackupContent="true"
@@ -22,7 +24,8 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".TorchReceiver" />
+        <service android:name=".TorchService" />
+
     </application>
 
 </manifest>
