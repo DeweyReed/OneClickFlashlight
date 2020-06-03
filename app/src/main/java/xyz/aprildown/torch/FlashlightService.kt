@@ -5,8 +5,10 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.hardware.camera2.CameraManager
 import android.os.Build
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.LifecycleService
@@ -135,8 +137,16 @@ class FlashlightService : LifecycleService() {
 
         private const val ACTION_TOGGLE = "toggle"
 
-        fun getIntent(context: Context): Intent =
+        private fun getIntent(context: Context): Intent =
             Intent(context, FlashlightService::class.java)
                 .setAction(ACTION_TOGGLE)
+
+        fun toggle(context: Context) {
+            if (!context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
+                Toast.makeText(context, R.string.flashlight_not_found, Toast.LENGTH_LONG).show()
+                return
+            }
+            context.startService(getIntent(context))
+        }
     }
 }
