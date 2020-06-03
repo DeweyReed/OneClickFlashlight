@@ -10,6 +10,10 @@
 
     <string name="settings">设置</string>
 
+    <string name="settings_toggle_title">闪光灯</string>
+    <string name="settings_toggle_on">已打开</string>
+    <string name="settings_toggle_off">已关闭</string>
+
     <string name="settings_category_app">应用设置</string>
 
     <string name="settings_greedy_key" translatable="false">key_greedy</string>

@@ -44,7 +44,7 @@ class FlashlightService : LifecycleService() {
                     ) {
                         stopSelf()
                     } else {
-                        setTorchMode(true)
+                        cm.setTorchMode(true)
                     }
                 }
             }
@@ -56,29 +56,18 @@ class FlashlightService : LifecycleService() {
         when (intent?.action) {
             ACTION_TOGGLE -> {
                 lifecycleScope.launch {
-                    if (isTorchOn()) {
+                    if (cm.isTorchOn()) {
                         userStop = true
-                        setTorchMode(false)
+                        cm.setTorchMode(false)
                         stopSelf()
                     } else {
-                        setTorchMode(true)
+                        cm.setTorchMode(true)
                         toForeground()
                     }
                 }
             }
         }
         return START_NOT_STICKY
-    }
-
-    private fun setTorchMode(enable: Boolean) {
-        for (currentCameraId in cm.cameraIdList) {
-            try {
-                cm.setTorchMode(currentCameraId, enable)
-                break
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
     }
 
     private fun toForeground() {
@@ -118,30 +107,6 @@ class FlashlightService : LifecycleService() {
         cm.unregisterTorchCallback(torchMonitor)
     }
 
-    private suspend fun isTorchOn(): Boolean = try {
-        withTimeout(500) {
-            suspendCancellableCoroutine<Boolean> { cont ->
-                var isResumed = false
-                val callback = object : CameraManager.TorchCallback() {
-                    override fun onTorchModeChanged(cameraId: String, enabled: Boolean) {
-                        cm.unregisterTorchCallback(this)
-                        if (!isResumed) {
-                            isResumed = true
-                            cont.resume(enabled)
-                        }
-                    }
-                }
-                cont.invokeOnCancellation { cm.unregisterTorchCallback(callback) }
-                cm.registerTorchCallback(callback, null)
-            }
-        }
-    } catch (e: TimeoutCancellationException) {
-        // This may be triggered if the camera's turned on by other apps using Camera 1 or 2 APIs.
-        // So we return true to turn off the torch
-        e.printStackTrace()
-        true
-    }
-
     companion object {
         private const val CHANNEL_ID = "channel"
 
@@ -157,6 +122,41 @@ class FlashlightService : LifecycleService() {
                 return
             }
             context.startService(getIntent(context))
+        }
+    }
+}
+
+suspend fun CameraManager.isTorchOn(): Boolean = try {
+    withTimeout(500) {
+        suspendCancellableCoroutine<Boolean> { cont ->
+            var isResumed = false
+            val callback = object : CameraManager.TorchCallback() {
+                override fun onTorchModeChanged(cameraId: String, enabled: Boolean) {
+                    unregisterTorchCallback(this)
+                    if (!isResumed) {
+                        isResumed = true
+                        cont.resume(enabled)
+                    }
+                }
+            }
+            cont.invokeOnCancellation { unregisterTorchCallback(callback) }
+            registerTorchCallback(callback, null)
+        }
+    }
+} catch (e: TimeoutCancellationException) {
+    // This may be triggered if the camera's turned on by other apps using Camera 1 or 2 APIs.
+    // So we return true to turn off the torch
+    e.printStackTrace()
+    true
+}
+
+fun CameraManager.setTorchMode(enable: Boolean) {
+    for (currentCameraId in cameraIdList) {
+        try {
+            setTorchMode(currentCameraId, enable)
+            break
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 }

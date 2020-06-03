@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SwitchPreferenceCompat
+        app:key="@string/settings_toggle_key"
+        app:persistent="false"
+        app:summaryOff="@string/settings_toggle_off"
+        app:summaryOn="@string/settings_toggle_on"
+        app:title="@string/settings_toggle_title" />
+
     <PreferenceCategory app:title="@string/settings_category_app">
 
         <SwitchPreferenceCompat
