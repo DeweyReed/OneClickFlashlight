@@ -16,6 +16,7 @@ android {
 
         archivesBaseName = "OneClickFlashlight-v${versionName}(${versionCode})"
 
+        buildConfigField("String", "APP_CENTER_SECRET", "\"" + getAppCenterSecret() + "\"")
     }
 
     buildTypes {
@@ -28,6 +29,13 @@ android {
 
 }
 
+def getAppCenterSecret() {
+    def keysFile = project.rootProject.file("local.properties")
+    def keysProperties = new Properties()
+    keysProperties.load(new FileInputStream(keysFile))
+    return keysProperties['appCenterSecret']
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -37,4 +45,8 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.1.1'
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.3'
+
+    def appCenterSdkVersion = '3.2.1'
+    implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
+    implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
 }
