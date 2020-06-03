@@ -9,4 +9,11 @@
 
     <string name="settings">Settings</string>
 
+    <string name="settings_category_app">App Settings</string>
+
+    <string name="settings_greedy_key" translatable="false">key_greedy</string>
+    <string name="settings_greedy_title">Greedy</string>
+    <string name="settings_greedy_on">Turn the flashlight back on if other apps turn it off.</string>
+    <string name="settings_greedy_off">Do nothing if other apps turn off the flashlight.</string>
+
 </resources>

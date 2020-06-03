@@ -23,6 +23,7 @@ class FlashlightService : LifecycleService() {
 
     private lateinit var cm: CameraManager
     private var isFirstTorchCallback = true
+    private var userStop = false
 
     override fun onCreate() {
         super.onCreate()
@@ -36,7 +37,15 @@ class FlashlightService : LifecycleService() {
                 isFirstTorchCallback = false
             } else {
                 if (!enabled) {
-                    stopSelf()
+                    if (userStop ||
+                        !safeSharedPreference.getBoolean(
+                            getString(R.string.settings_greedy_key), false
+                        )
+                    ) {
+                        stopSelf()
+                    } else {
+                        setTorchMode(true)
+                    }
                 }
             }
         }
@@ -48,6 +57,7 @@ class FlashlightService : LifecycleService() {
             ACTION_TOGGLE -> {
                 lifecycleScope.launch {
                     if (isTorchOn()) {
+                        userStop = true
                         setTorchMode(false)
                         stopSelf()
                     } else {

@@ -16,6 +16,7 @@ class SettingsActivity : AppCompatActivity() {
 
     class SettingsFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+            preferenceManager.setStorageDeviceProtected()
             setPreferencesFromResource(R.xml.settings, rootKey)
         }
     }

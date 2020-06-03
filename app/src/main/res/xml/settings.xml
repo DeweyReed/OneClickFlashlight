@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory app:title="@string/settings_category_app">
 
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:key="@string/settings_greedy_key"
+            app:summaryOff="@string/settings_greedy_off"
+            app:summaryOn="@string/settings_greedy_on"
+            app:title="@string/settings_greedy_title" />
+
+    </PreferenceCategory>
 </PreferenceScreen>
