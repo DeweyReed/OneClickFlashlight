@@ -11,4 +11,16 @@
             android:targetPackage="xyz.aprildown.torch" />
         <categories android:name="android.shortcut.conversation" />
     </shortcut>
+
+    <shortcut
+        android:icon="@drawable/shortcut_settings"
+        android:shortcutId="settings"
+        android:shortcutLongLabel="@string/settings"
+        android:shortcutShortLabel="@string/settings">
+        <intent
+            android:action="android.intent.action.View"
+            android:targetClass="xyz.aprildown.torch.SettingsActivity"
+            android:targetPackage="xyz.aprildown.torch" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
 </shortcuts>

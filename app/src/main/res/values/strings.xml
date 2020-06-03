@@ -4,4 +4,7 @@
     <string name="channel_name">Flashlight Channel</string>
     <string name="channel_desp">Used when the flashlight is on.</string>
     <string name="notif_desp">Click here to turn off the flashlight.</string>
+
+    <string name="settings">Settings</string>
+
 </resources>

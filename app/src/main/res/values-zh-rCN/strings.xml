@@ -5,4 +5,7 @@
     <string name="channel_name">闪光灯渠道</string>
     <string name="channel_desp">打开闪光灯时使用</string>
     <string name="notif_desp">点此关闭闪光灯</string>
+
+    <string name="settings">设置</string>
+
 </resources>
