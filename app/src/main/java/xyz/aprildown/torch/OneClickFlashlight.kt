@@ -4,7 +4,7 @@ import android.app.Application
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 
-class OneClickTorch : Application() {
+class OneClickFlashlight : Application() {
     override fun onCreate() {
         super.onCreate()
         AppCompatDelegate.setDefaultNightMode(

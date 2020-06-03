@@ -17,7 +17,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withTimeout
 import kotlin.coroutines.resume
 
-class TorchService : LifecycleService() {
+class FlashlightService : LifecycleService() {
 
     private lateinit var cm: CameraManager
     private var isFirstTorchCallback = true
@@ -136,7 +136,7 @@ class TorchService : LifecycleService() {
         private const val ACTION_TOGGLE = "toggle"
 
         fun getIntent(context: Context): Intent =
-            Intent(context, TorchService::class.java)
+            Intent(context, FlashlightService::class.java)
                 .setAction(ACTION_TOGGLE)
     }
 }

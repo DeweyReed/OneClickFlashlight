@@ -14,7 +14,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        archivesBaseName = "OneClickTorch-v${versionName}(${versionCode})"
+        archivesBaseName = "OneClickFlashlight-v${versionName}(${versionCode})"
 
     }
 

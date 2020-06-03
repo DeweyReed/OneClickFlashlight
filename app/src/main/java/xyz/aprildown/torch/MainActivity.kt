@@ -8,7 +8,7 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        startService(TorchService.getIntent(this))
+        startService(FlashlightService.getIntent(this))
 
         finish()
     }
