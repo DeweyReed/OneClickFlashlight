@@ -2,6 +2,7 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <SwitchPreferenceCompat
+        app:icon="@drawable/ic_logo"
         app:key="@string/settings_toggle_key"
         app:persistent="false"
         app:summaryOff="@string/settings_toggle_off"
@@ -12,6 +13,7 @@
 
         <SwitchPreferenceCompat
             app:defaultValue="false"
+            app:icon="@drawable/settings_greedy"
             app:key="@string/settings_greedy_key"
             app:summaryOff="@string/settings_greedy_off"
             app:summaryOn="@string/settings_greedy_on"
