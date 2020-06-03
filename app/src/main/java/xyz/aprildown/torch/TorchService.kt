@@ -11,8 +11,10 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withTimeout
 import kotlin.coroutines.resume
 
 class TorchService : LifecycleService() {
@@ -103,15 +105,28 @@ class TorchService : LifecycleService() {
         cm.unregisterTorchCallback(torchMonitor)
     }
 
-    private suspend fun isTorchOn(): Boolean = suspendCancellableCoroutine { cont ->
-        val callback = object : CameraManager.TorchCallback() {
-            override fun onTorchModeChanged(cameraId: String, enabled: Boolean) {
-                cm.unregisterTorchCallback(this)
-                cont.resume(enabled)
+    private suspend fun isTorchOn(): Boolean = try {
+        withTimeout(500) {
+            suspendCancellableCoroutine<Boolean> { cont ->
+                var isResumed = false
+                val callback = object : CameraManager.TorchCallback() {
+                    override fun onTorchModeChanged(cameraId: String, enabled: Boolean) {
+                        cm.unregisterTorchCallback(this)
+                        if (!isResumed) {
+                            isResumed = true
+                            cont.resume(enabled)
+                        }
+                    }
+                }
+                cont.invokeOnCancellation { cm.unregisterTorchCallback(callback) }
+                cm.registerTorchCallback(callback, null)
             }
         }
-        cont.invokeOnCancellation { cm.unregisterTorchCallback(callback) }
-        cm.registerTorchCallback(callback, null)
+    } catch (e: TimeoutCancellationException) {
+        // This may be triggered if the camera's turned on by other apps using Camera 1 or 2 APIs.
+        // So we return true to turn off the torch
+        e.printStackTrace()
+        true
     }
 
     companion object {
