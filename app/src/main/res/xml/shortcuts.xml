@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:icon="@drawable/shortcut_toggle"
+        android:shortcutId="toggle"
+        android:shortcutLongLabel="@string/app_name"
+        android:shortcutShortLabel="@string/app_name">
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetClass="xyz.aprildown.torch.MainActivity"
+            android:targetPackage="xyz.aprildown.torch" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+</shortcuts>
