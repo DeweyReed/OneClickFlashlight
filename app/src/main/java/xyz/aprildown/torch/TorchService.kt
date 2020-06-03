@@ -86,7 +86,8 @@ class TorchService : LifecycleService() {
             )
         }
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle(getString(R.string.app_name))
+            .setContentTitle(getText(R.string.app_name))
+            .setContentText(getText(R.string.notif_desp))
             .setContentIntent(
                 PendingIntent.getService(
                     this,
