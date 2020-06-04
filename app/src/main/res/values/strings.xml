@@ -21,4 +21,6 @@
     <string name="settings_greedy_on">Turn the flashlight back on if other apps turn it off.</string>
     <string name="settings_greedy_off">Do nothing if other apps turn off the flashlight.</string>
 
+    <string name="bright_screen">Bright Screen</string>
+
 </resources>

@@ -13,6 +13,18 @@
     </shortcut>
 
     <shortcut
+        android:icon="@drawable/shortcut_bright_screen"
+        android:shortcutId="bright_screen"
+        android:shortcutLongLabel="@string/bright_screen"
+        android:shortcutShortLabel="@string/bright_screen">
+        <intent
+            android:action="android.intent.action.View"
+            android:targetClass="xyz.aprildown.torch.BrightScreenActivity"
+            android:targetPackage="xyz.aprildown.torch" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+
+    <shortcut
         android:icon="@drawable/shortcut_settings"
         android:shortcutId="settings"
         android:shortcutLongLabel="@string/settings"
