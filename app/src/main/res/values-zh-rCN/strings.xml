@@ -16,7 +16,6 @@
 
     <string name="settings_category_app">应用设置</string>
 
-    <string name="settings_greedy_key" translatable="false">key_greedy</string>
     <string name="settings_greedy_title">贪婪</string>
     <string name="settings_greedy_on">其他应用关闭闪光灯后，重新打开闪光灯。</string>
     <string name="settings_greedy_off">其他应用关闭闪光灯后，什么也不做。</string>
