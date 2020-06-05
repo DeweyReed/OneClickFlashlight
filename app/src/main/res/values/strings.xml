@@ -23,4 +23,10 @@
 
     <string name="bright_screen">Bright Screen</string>
 
+    <string name="about">About</string>
+    <string name="feedback">Feedback</string>
+    <string name="source_code">Source Code</string>
+    <string name="license">License</string>
+    <string name="license_content" translatable="false">Apache License 2.0</string>
+
 </resources>
