@@ -97,7 +97,7 @@ class FlashlightService : LifecycleService() {
                     PendingIntent.FLAG_UPDATE_CURRENT
                 )
             )
-            .setSmallIcon(R.mipmap.ic_launcher_round)
+            .setSmallIcon(R.drawable.ic_logo)
             .build()
         startForeground(1, notification)
     }
