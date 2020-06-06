@@ -16,6 +16,10 @@ buildscript {
     }
 }
 
+plugins {
+    id "de.timfreiheit.resourceplaceholders" version "0.3"
+}
+
 allprojects {
     repositories {
         google()

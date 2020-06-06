@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 
+apply plugin: 'de.timfreiheit.resourceplaceholders.plugin'
+
 android {
     compileSdkVersion 29
 
@@ -38,6 +40,10 @@ def getAppCenterSecret() {
     def keysProperties = new Properties()
     keysProperties.load(new FileInputStream(keysFile))
     return keysProperties['appCenterSecret']
+}
+
+resourcePlaceholders {
+    files = ['xml/shortcuts.xml']
 }
 
 dependencies {
