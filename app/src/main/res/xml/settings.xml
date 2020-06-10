@@ -10,7 +10,9 @@
         app:summaryOn="@string/settings_toggle_on"
         app:title="@string/settings_toggle_title" />
 
-    <PreferenceCategory app:title="@string/settings_category_app">
+    <PreferenceCategory
+        app:isPreferenceVisible="false"
+        app:title="@string/settings_category_app">
 
     </PreferenceCategory>
 
