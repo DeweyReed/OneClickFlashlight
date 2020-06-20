@@ -48,15 +48,17 @@ resourcePlaceholders {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-service:2.2.0'
-    implementation 'androidx.preference:preference-ktx:1.1.1'
 
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.3'
+    implementation libs.kotlin_stdlib_jdk7
 
-    def appCenterSdkVersion = '3.2.1'
-    implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
-    implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
+    implementation libs.androidx_appcompat
+    implementation libs.androidx_preference
+    implementation libs.androidx_lifecycle_runtime
+    implementation libs.androidx_lifecycle_service
+
+    debugImplementation libs.leak_cannary
+
+    implementation libs.appcenter_analytics
+    implementation libs.appcenter_crashes
+
 }
