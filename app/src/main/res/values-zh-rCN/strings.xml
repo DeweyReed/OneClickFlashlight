@@ -14,12 +14,16 @@
     <string name="settings_toggle_on">已打开</string>
     <string name="settings_toggle_off">已关闭</string>
 
-    <string name="settings_category_app">应用设置</string>
+    <string name="settings_category_anti_touch">防触碰设置</string>
 
     <string name="settings_anti_touch_title">防触碰</string>
     <string name="settings_anti_touch_on">应用会在打开闪光灯时显示一个窗口阻止你触摸屏幕。</string>
     <string name="settings_anti_touch_off">未启用</string>
     <string name="settings_anti_touch_hint">按击音量下键关闭此界面\n这不会修改你的音量设置</string>
+
+    <string name="settings_anti_touch_ephemeral_title">临时防触碰</string>
+    <string name="settings_anti_touch_ephemeral_on">在防触碰窗口被遮挡（包括关闭手机屏幕）时，立即关闭防触碰窗口和闪光灯。</string>
+    <string name="settings_anti_touch_ephemeral_off">未启用</string>
 
     <string name="bright_screen">点亮屏幕</string>
 

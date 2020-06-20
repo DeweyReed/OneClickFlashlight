@@ -14,13 +14,18 @@
     <string name="settings_toggle_on">ON</string>
     <string name="settings_toggle_off">OFF</string>
 
-    <string name="settings_category_app">App Settings</string>
+    <string name="settings_category_anti_touch">Anti Touch Settings</string>
 
     <string name="settings_anti_touch_key" translatable="false">key_anti_touch</string>
     <string name="settings_anti_touch_title">Anti-Touch</string>
     <string name="settings_anti_touch_on">The app will prevent you from touching the screen by showing an overlay.</string>
     <string name="settings_anti_touch_off">Disabled</string>
     <string name="settings_anti_touch_hint">Press the volume down button to close this screen.\nIt won\'t adjust your volume settings.</string>
+
+    <string name="settings_anti_touch_ephemeral_key" translatable="false">key_anti_touch_ephemeral</string>
+    <string name="settings_anti_touch_ephemeral_title">Ephemeral Anti-Touch</string>
+    <string name="settings_anti_touch_ephemeral_on">When the Anti-Touch overlay is obstructed(including turning the screen off), the overlay and the flashlight will be closed immediately.</string>
+    <string name="settings_anti_touch_ephemeral_off">Disabled</string>
 
     <string name="bright_screen">Bright Screen</string>
 

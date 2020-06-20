@@ -33,6 +33,14 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
     viewBinding.enabled = true
 }
 
@@ -56,6 +64,7 @@ dependencies {
     implementation libs.androidx_preference
     implementation libs.androidx_lifecycle_runtime
     implementation libs.androidx_lifecycle_service
+    implementation libs.androidx_lifecycle_compiler
 
     debugImplementation libs.leak_cannary
 

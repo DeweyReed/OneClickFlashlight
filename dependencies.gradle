@@ -13,17 +13,18 @@ ext {
             version_name         : '0.1.2',
     ]
     libs = [
-            kotlin_stdlib_jdk7        : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}",
+            kotlin_stdlib_jdk7         : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}",
 
-            androidx_appcompat        : 'androidx.appcompat:appcompat:1.1.0',
-            androidx_preference       : 'androidx.preference:preference:1.1.1',
-            androidx_lifecycle_runtime: 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0',
-            androidx_lifecycle_service: 'androidx.lifecycle:lifecycle-service:2.2.0',
+            androidx_appcompat         : 'androidx.appcompat:appcompat:1.1.0',
+            androidx_preference        : 'androidx.preference:preference:1.1.1',
+            androidx_lifecycle_runtime : 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0',
+            androidx_lifecycle_service : 'androidx.lifecycle:lifecycle-service:2.2.0',
+            androidx_lifecycle_compiler: 'androidx.lifecycle:lifecycle-common-java8:2.2.0',
 
-            leak_cannary              : 'com.squareup.leakcanary:leakcanary-android:2.4',
+            leak_cannary               : 'com.squareup.leakcanary:leakcanary-android:2.4',
 
-            appcenter_analytics       : 'com.microsoft.appcenter:appcenter-analytics:3.2.2',
-            appcenter_crashes         : 'com.microsoft.appcenter:appcenter-crashes:3.2.2',
+            appcenter_analytics        : 'com.microsoft.appcenter:appcenter-analytics:3.2.2',
+            appcenter_crashes          : 'com.microsoft.appcenter:appcenter-crashes:3.2.2',
 
     ]
 }

@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import xyz.aprildown.torch.databinding.ActivityAntiTouchBinding
 
 class AntiTouchActivity : AppCompatActivity() {
@@ -17,19 +19,39 @@ class AntiTouchActivity : AppCompatActivity() {
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
                 View.SYSTEM_UI_FLAG_FULLSCREEN
+
+        if (safeSharedPreference.getBoolean(
+                getString(R.string.settings_anti_touch_ephemeral_key), false
+            )
+        ) {
+            lifecycle.addObserver(
+                object : DefaultLifecycleObserver {
+                    override fun onStop(owner: LifecycleOwner) {
+                        done()
+                    }
+                }
+            )
+        } else {
+            lifecycle.addObserver(
+                object : DefaultLifecycleObserver {
+                    override fun onDestroy(owner: LifecycleOwner) {
+                        done()
+                    }
+                }
+            )
+        }
     }
 
     override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
         if (event?.action == KeyEvent.ACTION_UP && event.keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
-            FlashlightService.turn(this, on = false)
-            finish()
+            done()
             return true
         }
         return super.dispatchKeyEvent(event)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    private fun done() {
         FlashlightService.turn(this, on = false)
+        finish()
     }
 }

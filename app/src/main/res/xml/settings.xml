@@ -10,7 +10,7 @@
         app:summaryOn="@string/settings_toggle_on"
         app:title="@string/settings_toggle_title" />
 
-    <PreferenceCategory app:title="@string/settings_category_app">
+    <PreferenceCategory app:title="@string/settings_category_anti_touch">
 
         <SwitchPreferenceCompat
             app:defaultValue="false"
@@ -18,6 +18,14 @@
             app:summaryOff="@string/settings_anti_touch_off"
             app:summaryOn="@string/settings_anti_touch_on"
             app:title="@string/settings_anti_touch_title" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:dependency="@string/settings_anti_touch_key"
+            app:key="@string/settings_anti_touch_ephemeral_key"
+            app:summaryOff="@string/settings_anti_touch_ephemeral_off"
+            app:summaryOn="@string/settings_anti_touch_ephemeral_on"
+            app:title="@string/settings_anti_touch_ephemeral_title" />
 
     </PreferenceCategory>
 
