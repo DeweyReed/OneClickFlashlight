@@ -16,6 +16,11 @@
 
     <string name="settings_category_app">应用设置</string>
 
+    <string name="settings_anti_touch_title">防触碰</string>
+    <string name="settings_anti_touch_on">应用会在打开闪光灯时显示一个窗口阻止你触摸屏幕。</string>
+    <string name="settings_anti_touch_off">未启用</string>
+    <string name="settings_anti_touch_hint">按击音量下键关闭此界面\n这不会修改你的音量设置</string>
+
     <string name="bright_screen">点亮屏幕</string>
 
     <string name="about">关于</string>

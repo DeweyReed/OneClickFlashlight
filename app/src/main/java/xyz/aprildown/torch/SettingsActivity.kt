@@ -16,43 +16,43 @@ class SettingsActivity : AppCompatActivity() {
                 .commit()
         }
     }
+}
 
-    class SettingsFragment : PreferenceFragmentCompat() {
+class SettingsFragment : PreferenceFragmentCompat() {
 
-        private lateinit var cm: CameraManager
+    private lateinit var cm: CameraManager
 
-        override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
-            cm = requireContext().getSystemService(Context.CAMERA_SERVICE) as CameraManager
-        }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        cm = requireContext().getSystemService(Context.CAMERA_SERVICE) as CameraManager
+    }
 
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            preferenceManager.setStorageDeviceProtected()
-            setPreferencesFromResource(R.xml.settings, rootKey)
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        preferenceManager.setStorageDeviceProtected()
+        setPreferencesFromResource(R.xml.settings, rootKey)
 
-            val context = requireContext()
-            findPreference<SwitchPreferenceCompat>(getString(R.string.settings_toggle_key))
-                ?.setOnPreferenceClickListener {
-                    FlashlightService.toggle(context)
-                    true
-                }
-        }
-
-        private val torchCallback = object : CameraManager.TorchCallback() {
-            override fun onTorchModeChanged(cameraId: String, enabled: Boolean) {
-                findPreference<SwitchPreferenceCompat>(getString(R.string.settings_toggle_key))
-                    ?.isChecked = enabled
+        val context = requireContext()
+        findPreference<SwitchPreferenceCompat>(getString(R.string.settings_toggle_key))
+            ?.setOnPreferenceClickListener {
+                FlashlightService.toggle(context)
+                true
             }
-        }
+    }
 
-        override fun onResume() {
-            super.onResume()
-            cm.registerTorchCallback(torchCallback, null)
+    private val torchCallback = object : CameraManager.TorchCallback() {
+        override fun onTorchModeChanged(cameraId: String, enabled: Boolean) {
+            findPreference<SwitchPreferenceCompat>(getString(R.string.settings_toggle_key))
+                ?.isChecked = enabled
         }
+    }
 
-        override fun onPause() {
-            super.onPause()
-            cm.unregisterTorchCallback(torchCallback)
-        }
+    override fun onResume() {
+        super.onResume()
+        cm.registerTorchCallback(torchCallback, null)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        cm.unregisterTorchCallback(torchCallback)
     }
 }

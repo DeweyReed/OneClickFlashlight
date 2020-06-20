@@ -10,9 +10,14 @@
         app:summaryOn="@string/settings_toggle_on"
         app:title="@string/settings_toggle_title" />
 
-    <PreferenceCategory
-        app:isPreferenceVisible="false"
-        app:title="@string/settings_category_app">
+    <PreferenceCategory app:title="@string/settings_category_app">
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:key="@string/settings_anti_touch_key"
+            app:summaryOff="@string/settings_anti_touch_off"
+            app:summaryOn="@string/settings_anti_touch_on"
+            app:title="@string/settings_anti_touch_title" />
 
     </PreferenceCategory>
 

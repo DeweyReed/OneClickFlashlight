@@ -48,16 +48,40 @@ class FlashlightService : LifecycleService() {
             ACTION_TOGGLE -> {
                 lifecycleScope.launch {
                     if (cm.isTorchOn()) {
-                        cm.setTorchMode(false)
-                        stopSelf()
+                        turnOff()
                     } else {
-                        cm.setTorchMode(true)
-                        toForeground()
+                        turnOn()
+                    }
+                }
+            }
+            ACTION_TURN -> {
+                lifecycleScope.launch {
+                    val shouldOn = intent.getBooleanExtra(EXTRA_TURN_ON, false)
+                    if (!shouldOn) {
+                        turnOff()
+                    } else if (!cm.isTorchOn()) {
+                        turnOn()
                     }
                 }
             }
         }
         return START_NOT_STICKY
+    }
+
+    private fun turnOn() {
+        cm.setTorchMode(true)
+        toForeground()
+        if (safeSharedPreference.getBoolean(getString(R.string.settings_anti_touch_key), false)) {
+            startActivity(
+                Intent(this, AntiTouchActivity::class.java)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            )
+        }
+    }
+
+    private fun turnOff() {
+        cm.setTorchMode(false)
+        stopSelf()
     }
 
     private fun toForeground() {
@@ -83,7 +107,7 @@ class FlashlightService : LifecycleService() {
                 PendingIntent.getService(
                     this,
                     0,
-                    getIntent(this),
+                    getToggleIntent(this),
                     PendingIntent.FLAG_UPDATE_CURRENT
                 )
             )
@@ -101,17 +125,38 @@ class FlashlightService : LifecycleService() {
         private const val CHANNEL_ID = "channel"
 
         private const val ACTION_TOGGLE = "toggle"
+        private const val ACTION_TURN = "turn"
+        private const val EXTRA_TURN_ON = "on"
 
-        private fun getIntent(context: Context): Intent =
-            Intent(context, FlashlightService::class.java)
-                .setAction(ACTION_TOGGLE)
+        private fun getPureIntent(context: Context): Intent {
+            return Intent(context, FlashlightService::class.java)
+        }
 
-        fun toggle(context: Context) {
+        private fun getToggleIntent(context: Context): Intent {
+            return getPureIntent(context).setAction(ACTION_TOGGLE)
+        }
+
+        private fun getTurnIntent(context: Context, on: Boolean): Intent {
+            return getPureIntent(context).setAction(ACTION_TURN)
+                .putExtra(EXTRA_TURN_ON, on)
+        }
+
+        private fun ensureFlashlightAvailability(context: Context): Boolean {
             if (!context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
                 Toast.makeText(context, R.string.flashlight_not_found, Toast.LENGTH_LONG).show()
-                return
+                return false
             }
-            context.startService(getIntent(context))
+            return true
+        }
+
+        fun toggle(context: Context) {
+            if (!ensureFlashlightAvailability(context)) return
+            context.startService(getToggleIntent(context))
+        }
+
+        fun turn(context: Context, on: Boolean) {
+            if (!ensureFlashlightAvailability(context)) return
+            context.startService(getTurnIntent(context, on))
         }
     }
 }

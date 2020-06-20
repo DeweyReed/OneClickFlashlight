@@ -23,7 +23,7 @@
         <activity
             android:name=".MainActivity"
             android:excludeFromRecents="true"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstance"
             android:taskAffinity=""
             android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
@@ -42,7 +42,17 @@
 
         <activity
             android:name=".BrightScreenActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:taskAffinity=""
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".AntiTouchActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:taskAffinity=""
+            android:theme="@style/AppTheme.AntiTouch" />
 
         <service android:name=".FlashlightService" />
 

@@ -16,6 +16,12 @@
 
     <string name="settings_category_app">App Settings</string>
 
+    <string name="settings_anti_touch_key" translatable="false">key_anti_touch</string>
+    <string name="settings_anti_touch_title">Anti-Touch</string>
+    <string name="settings_anti_touch_on">The app will prevent you from touching the screen by showing an overlay.</string>
+    <string name="settings_anti_touch_off">Disabled</string>
+    <string name="settings_anti_touch_hint">Press the volume down button to close this screen.\nIt won\'t adjust your volume settings.</string>
+
     <string name="bright_screen">Bright Screen</string>
 
     <string name="about">About</string>
