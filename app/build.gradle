@@ -5,18 +5,18 @@ apply plugin: 'kotlin-android'
 apply plugin: 'de.timfreiheit.resourceplaceholders.plugin'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion versions.compile_sdk
 
     defaultConfig {
         applicationId "xyz.aprildown.torch"
-        minSdkVersion 23
-        targetSdkVersion 29
-        versionCode 11
-        versionName "0.1.1"
+        minSdkVersion versions.min_sdk
+        targetSdkVersion versions.target_sdk
+        versionCode versions.version_code
+        versionName versions.version_name
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        archivesBaseName = "OneClickFlashlight-v${versionName}(${versionCode})"
+        archivesBaseName = "OneClickFlashlight-v${versionName}-${versionCode}"
 
         buildConfigField("String", "APP_CENTER_SECRET", "\"" + getAppCenterSecret() + "\"")
     }

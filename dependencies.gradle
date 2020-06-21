@@ -6,7 +6,7 @@ ext {
             resources_placeholder: '0.3',
 
             compile_sdk          : 29,
-            min_sdk              : 21,
+            min_sdk              : 23,
             target_sdk           : 29,
 
             version_code         : 12,
