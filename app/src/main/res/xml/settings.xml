@@ -10,34 +10,59 @@
         app:summaryOn="@string/settings_toggle_on"
         app:title="@string/settings_toggle_title" />
 
-    <PreferenceCategory app:title="@string/settings_category_anti_touch">
+    <PreferenceCategory app:title="@string/settings_category_shortcuts">
 
-        <SwitchPreferenceCompat
-            app:defaultValue="false"
-            app:key="@string/settings_anti_touch_key"
-            app:summaryOff="@string/settings_anti_touch_off"
-            app:summaryOn="@string/settings_anti_touch_on"
-            app:title="@string/settings_anti_touch_title" />
+        <Preference
+            app:icon="@drawable/settings_flashlight"
+            app:key="@string/shortcuts_toggle_key"
+            app:summary="@string/shortcuts_toggle_desp"
+            app:title="@string/shortcuts_toggle_title" />
 
-        <SwitchPreferenceCompat
-            app:defaultValue="false"
-            app:dependency="@string/settings_anti_touch_key"
-            app:key="@string/settings_anti_touch_ephemeral_key"
-            app:summaryOff="@string/settings_anti_touch_ephemeral_off"
-            app:summaryOn="@string/settings_anti_touch_ephemeral_on"
-            app:title="@string/settings_anti_touch_ephemeral_title" />
+        <Preference
+            app:icon="@drawable/settings_anti_touch"
+            app:key="@string/shortcuts_anti_touch_key"
+            app:summary="@string/shortcuts_anti_touch_desp"
+            app:title="@string/shortcuts_anti_touch_title" />
+
+        <Preference
+            app:icon="@drawable/settings_ephemeral_anti_touch"
+            app:key="@string/shortcuts_ephemeral_anti_touch_key"
+            app:summary="@string/shortcuts_ephemeral_anti_touch_desp"
+            app:title="@string/shortcuts_ephemeral_anti_touch_title" />
+
+        <Preference
+            app:icon="@drawable/settings_on_off_anti_touch"
+            app:key="@string/shortcuts_on_off_anti_touch_key"
+            app:summary="@string/shortcuts_on_off_anti_touch_desp"
+            app:title="@string/shortcuts_on_off_anti_touch_title" />
+
+        <Preference
+            app:icon="@drawable/settings_bright_screen"
+            app:key="@string/shortcuts_bright_screen_key"
+            app:summary="@string/shortcuts_bright_screen_desp"
+            app:title="@string/shortcuts_bright_screen_title" />
+
+        <Preference
+            app:icon="@drawable/settings_flashbang"
+            app:key="@string/shortcuts_flashbang_key"
+            app:summary="@string/shortcuts_flashbang_desp"
+            app:title="@string/shortcuts_flashbang_title" />
 
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/about">
 
-        <Preference app:title="@string/feedback">
+        <Preference
+            app:icon="@drawable/settings_feedback"
+            app:title="@string/feedback">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="https://github.com/DeweyReed/OneClickFlashlight/issues" />
         </Preference>
 
-        <Preference app:title="@string/source_code">
+        <Preference
+            app:icon="@drawable/settings_code"
+            app:title="@string/source_code">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="https://github.com/DeweyReed/OneClickFlashlight" />

@@ -8,6 +8,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="@string/settings_anti_touch_hint" />
+        android:text="@string/anti_touch_hint" />
 
 </FrameLayout>

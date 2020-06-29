@@ -4,6 +4,7 @@ import android.content.Context
 import android.hardware.camera2.CameraManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 
@@ -35,6 +36,37 @@ class SettingsFragment : PreferenceFragmentCompat() {
         findPreference<SwitchPreferenceCompat>(getString(R.string.settings_toggle_key))
             ?.setOnPreferenceClickListener {
                 FlashlightService.toggle(context)
+                true
+            }
+
+        findPreference<Preference>(getString(R.string.shortcuts_toggle_key))
+            ?.setOnPreferenceClickListener {
+                context.pinShortcut(FlashlightShortcut.Toggle)
+                true
+            }
+        findPreference<Preference>(getString(R.string.shortcuts_anti_touch_key))
+            ?.setOnPreferenceClickListener {
+                context.pinShortcut(FlashlightShortcut.AntiTouch)
+                true
+            }
+        findPreference<Preference>(getString(R.string.shortcuts_ephemeral_anti_touch_key))
+            ?.setOnPreferenceClickListener {
+                context.pinShortcut(FlashlightShortcut.EphemeralAntiTouch)
+                true
+            }
+        findPreference<Preference>(getString(R.string.shortcuts_on_off_anti_touch_key))
+            ?.setOnPreferenceClickListener {
+                context.pinShortcut(FlashlightShortcut.OnOffAntiTouch)
+                true
+            }
+        findPreference<Preference>(getString(R.string.shortcuts_bright_screen_key))
+            ?.setOnPreferenceClickListener {
+                context.pinShortcut(FlashlightShortcut.BrightScreen)
+                true
+            }
+        findPreference<Preference>(getString(R.string.shortcuts_flashbang_key))
+            ?.setOnPreferenceClickListener {
+                context.pinShortcut(FlashlightShortcut.Flashbang)
                 true
             }
     }

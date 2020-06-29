@@ -71,12 +71,6 @@ class FlashlightService : LifecycleService() {
     private fun turnOn() {
         cm.setTorchMode(true)
         toForeground()
-        if (safeSharedPreference.getBoolean(getString(R.string.settings_anti_touch_key), false)) {
-            startActivity(
-                Intent(this, AntiTouchActivity::class.java)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            )
-        }
     }
 
     private fun turnOff() {

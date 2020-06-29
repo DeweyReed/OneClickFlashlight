@@ -1,5 +1,7 @@
 package xyz.aprildown.torch
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
@@ -20,25 +22,55 @@ class AntiTouchActivity : AppCompatActivity() {
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
                 View.SYSTEM_UI_FLAG_FULLSCREEN
 
-        if (safeSharedPreference.getBoolean(
-                getString(R.string.settings_anti_touch_ephemeral_key), false
-            )
-        ) {
-            lifecycle.addObserver(
+        val ordinal = intent?.getIntExtra(EXTRA_TYPE, 0) ?: 0
+        val observer = when (FlashlightShortcut.values()[ordinal]) {
+            FlashlightShortcut.AntiTouch -> {
                 object : DefaultLifecycleObserver {
-                    override fun onStop(owner: LifecycleOwner) {
-                        done()
+                    override fun onCreate(owner: LifecycleOwner) {
+                        on()
                     }
-                }
-            )
-        } else {
-            lifecycle.addObserver(
-                object : DefaultLifecycleObserver {
+
                     override fun onDestroy(owner: LifecycleOwner) {
                         done()
                     }
                 }
-            )
+            }
+            FlashlightShortcut.EphemeralAntiTouch -> {
+                object : DefaultLifecycleObserver {
+                    override fun onCreate(owner: LifecycleOwner) {
+                        on()
+                    }
+
+                    override fun onStop(owner: LifecycleOwner) {
+                        done()
+                    }
+                }
+            }
+            FlashlightShortcut.OnOffAntiTouch -> {
+                object : DefaultLifecycleObserver {
+                    override fun onCreate(owner: LifecycleOwner) {
+                        on()
+                    }
+
+                    override fun onStart(owner: LifecycleOwner) {
+                        on()
+                    }
+
+                    override fun onStop(owner: LifecycleOwner) {
+                        off()
+                    }
+
+                    override fun onDestroy(owner: LifecycleOwner) {
+                        done()
+                    }
+                }
+            }
+            else -> null
+        }
+        if (observer != null) {
+            lifecycle.addObserver(observer)
+        } else {
+            finish()
         }
     }
 
@@ -50,8 +82,25 @@ class AntiTouchActivity : AppCompatActivity() {
         return super.dispatchKeyEvent(event)
     }
 
-    private fun done() {
+    private fun on() {
+        FlashlightService.turn(this, on = true)
+    }
+
+    private fun off() {
         FlashlightService.turn(this, on = false)
+    }
+
+    private fun done() {
+        off()
         finish()
+    }
+
+    companion object {
+        private const val EXTRA_TYPE = "type"
+
+        fun getIntent(context: Context, type: FlashlightShortcut): Intent {
+            return Intent(context, AntiTouchActivity::class.java)
+                .putExtra(EXTRA_TYPE, type.ordinal)
+        }
     }
 }
