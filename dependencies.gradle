@@ -2,7 +2,7 @@ ext {
     versions = [
             agp                  : '3.6.4',
             kotlin               : '1.3.72',
-            versions             : '0.28.0',
+            versions             : '0.29.0',
             resources_placeholder: '0.3',
 
             compile_sdk          : 29,
