@@ -27,5 +27,9 @@ enum class FlashlightShortcut(@StringRes val nameRes: Int, @DrawableRes val icon
     Flashbang(
         nameRes = R.string.shortcuts_flashbang_title,
         iconRes = R.drawable.shortcut_flashbang
+    ),
+    FloatingWindow(
+        nameRes = R.string.shortcuts_floating_window_title,
+        iconRes = R.drawable.shortcut_floating_window
     )
 }

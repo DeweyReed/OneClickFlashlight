@@ -10,6 +10,7 @@
         android:required="true" />
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name=".OneClickFlashlight"
@@ -55,6 +56,7 @@
             android:theme="@style/AppTheme.AntiTouch" />
 
         <service android:name=".FlashlightService" />
+        <service android:name=".FloatingWindowService" />
 
     </application>
 

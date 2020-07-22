@@ -17,6 +17,9 @@ class MainActivity : Activity() {
             ACTION_SHORTCUT_CREATED -> {
                 Toast.makeText(this, R.string.shortcut_created, Toast.LENGTH_SHORT).show()
             }
+            ACTION_FLOATING_WINDOW -> {
+                startService(FloatingWindowService.getToggleIntent(this))
+            }
             else -> {
                 FlashlightService.toggle(this)
             }
@@ -27,6 +30,7 @@ class MainActivity : Activity() {
 
     companion object {
         private const val ACTION_SHORTCUT_CREATED = "short_created"
+        private const val ACTION_FLOATING_WINDOW = "floating_window"
 
         fun getIntent(context: Context): Intent {
             return Intent(context, MainActivity::class.java)
@@ -39,6 +43,10 @@ class MainActivity : Activity() {
                 getIntent(context).setAction(ACTION_SHORTCUT_CREATED),
                 PendingIntent.FLAG_UPDATE_CURRENT
             ).intentSender
+        }
+
+        fun getFloatingWindowIntent(context: Context): Intent {
+            return getIntent(context).setAction(ACTION_FLOATING_WINDOW)
         }
     }
 }

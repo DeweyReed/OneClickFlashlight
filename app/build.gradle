@@ -66,6 +66,8 @@ dependencies {
     implementation libs.androidx_lifecycle_service
     implementation libs.androidx_lifecycle_compiler
 
+    implementation libs.material
+
     debugImplementation libs.leak_cannary
 
     implementation libs.appcenter_analytics

@@ -4,7 +4,6 @@
     <string name="flashlight_not_found">Unable to find a camera flashlight.</string>
 
     <string name="channel_name">Flashlight Channel</string>
-    <string name="channel_desp">Used when the flashlight is on.</string>
     <string name="notif_desp">Click here to turn off the flashlight.</string>
 
     <string name="shortcut_created">Shortcut created</string>
@@ -42,6 +41,12 @@
     <string name="shortcuts_flashbang_key" translatable="false">key_shortcuts_flashbang</string>
     <string name="shortcuts_flashbang_title">Flashbang</string>
     <string name="shortcuts_flashbang_desp">Flashlight + Bright Screen</string>
+
+    <string name="shortcuts_floating_window_key" translatable="false">key_shortcuts_floating_window</string>
+    <string name="shortcuts_floating_window_title">Floating Window</string>
+    <string name="shortcuts_floating_window_desp">A floating button to control the flashlight.</string>
+    <string name="floating_window_service_title">1-Click Flashlight Floating Window</string>
+    <string name="floating_window_service_desp">Click here to close the floating window.</string>
 
     <string name="about">About</string>
 

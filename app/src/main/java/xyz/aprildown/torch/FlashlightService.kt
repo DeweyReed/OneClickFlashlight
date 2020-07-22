@@ -79,21 +79,7 @@ class FlashlightService : LifecycleService() {
     }
 
     private fun toForeground() {
-        val nm = NotificationManagerCompat.from(this)
-        if (nm.getNotificationChannel(CHANNEL_ID) == null &&
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
-        ) {
-            nm.createNotificationChannel(
-                NotificationChannel(
-                    CHANNEL_ID,
-                    getText(R.string.channel_name),
-                    NotificationManager.IMPORTANCE_LOW
-                ).apply {
-                    description = getString(R.string.channel_desp)
-                    setShowBadge(false)
-                }
-            )
-        }
+        ensureNotificationChannel(this)
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(getText(R.string.app_name))
             .setContentText(getText(R.string.notif_desp))
@@ -116,11 +102,29 @@ class FlashlightService : LifecycleService() {
     }
 
     companion object {
-        private const val CHANNEL_ID = "channel"
+        const val CHANNEL_ID = "channel"
 
         private const val ACTION_TOGGLE = "toggle"
         private const val ACTION_TURN = "turn"
         private const val EXTRA_TURN_ON = "on"
+
+        fun ensureNotificationChannel(context: Context) {
+            val nm = NotificationManagerCompat.from(context)
+            if (
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
+                nm.getNotificationChannel(CHANNEL_ID) == null
+            ) {
+                nm.createNotificationChannel(
+                    NotificationChannel(
+                        CHANNEL_ID,
+                        context.getText(R.string.channel_name),
+                        NotificationManager.IMPORTANCE_LOW
+                    ).apply {
+                        setShowBadge(false)
+                    }
+                )
+            }
+        }
 
         private fun getPureIntent(context: Context): Intent {
             return Intent(context, FlashlightService::class.java)

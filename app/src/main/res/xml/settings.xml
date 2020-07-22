@@ -48,6 +48,12 @@
             app:summary="@string/shortcuts_flashbang_desp"
             app:title="@string/shortcuts_flashbang_title" />
 
+        <Preference
+            app:icon="@drawable/settings_floating_window"
+            app:key="@string/shortcuts_floating_window_key"
+            app:summary="@string/shortcuts_floating_window_desp"
+            app:title="@string/shortcuts_floating_window_title" />
+
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/about">

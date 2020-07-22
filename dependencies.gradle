@@ -21,6 +21,8 @@ ext {
             androidx_lifecycle_service : 'androidx.lifecycle:lifecycle-service:2.2.0',
             androidx_lifecycle_compiler: 'androidx.lifecycle:lifecycle-common-java8:2.2.0',
 
+            material                   : 'com.google.android.material:material:1.1.0',
+
             leak_cannary               : 'com.squareup.leakcanary:leakcanary-android:2.4',
 
             appcenter_analytics        : 'com.microsoft.appcenter:appcenter-analytics:3.2.2',

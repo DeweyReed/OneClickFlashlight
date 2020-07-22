@@ -25,7 +25,16 @@ fun Context.pinShortcut(type: FlashlightShortcut) {
                     FlashlightShortcut.Flashbang -> {
                         BrightScreenActivity.getIntent(this@pinShortcut, type)
                     }
-                }.setAction("")
+                    FlashlightShortcut.FloatingWindow -> {
+                        MainActivity.getFloatingWindowIntent(this@pinShortcut)
+                    }
+                }.run {
+                    if (action.isNullOrBlank()) {
+                        setAction("")
+                    } else {
+                        this
+                    }
+                }
                 setIntent(intent)
             }
             .build(),
