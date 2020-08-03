@@ -1,9 +1,12 @@
 package xyz.aprildown.torch
 
 import android.app.PendingIntent
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.res.ColorStateList
+import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.PixelFormat
 import android.hardware.camera2.CameraManager
@@ -165,23 +168,59 @@ private class Floater(
         private set
         get() = lp.y
 
+    private val screenWidth: Int
+    private val screenHeight: Int
+
     private var isViewAdded = false
+    private var currentOrientation = context.resources.configuration.orientation
+
+    init {
+        val displayMetrics = Resources.getSystem().displayMetrics
+        screenWidth = displayMetrics.widthPixels
+        screenHeight = displayMetrics.heightPixels
+    }
+
+    private val orientationReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (context == null || intent?.action != Intent.ACTION_CONFIGURATION_CHANGED) return
+
+            val newOrientation = context.resources.configuration.orientation
+            if (currentOrientation != newOrientation) {
+                currentOrientation = newOrientation
+                if (isViewAdded) {
+                    if (newOrientation == Configuration.ORIENTATION_PORTRAIT) {
+                        updatePos(x = screenWidth / 2, y = screenHeight / 2)
+                    } else {
+                        updatePos(x = screenHeight / 2, y = screenWidth / 2)
+                    }
+                }
+            }
+        }
+    }
 
     fun show() {
-        val touchListener = FloatViewTouchListener(this)
+        val touchListener = FloatViewTouchListener(
+            fm = this,
+            screenWidth = screenWidth,
+            screenHeight = screenHeight
+        )
         view.setOnTouchListener(touchListener)
         wm.addView(view, lp)
         isViewAdded = true
 
-        updatePos(
-            x = touchListener.screenWidth / 2,
-            y = touchListener.screenHeight / 2
+        updatePos(x = screenWidth / 2, y = screenHeight / 2)
+
+        context.registerReceiver(
+            orientationReceiver,
+            IntentFilter(Intent.ACTION_CONFIGURATION_CHANGED)
         )
     }
 
     fun dismiss() {
         isViewAdded = false
         wm.removeView(view)
+
+        context.unregisterReceiver(orientationReceiver)
     }
 
     fun updatePos(x: Int = currentX, y: Int = currentY) {
@@ -198,23 +237,19 @@ private class Floater(
     }
 }
 
-private class FloatViewTouchListener(private val fm: Floater) : View.OnTouchListener {
+private class FloatViewTouchListener(
+    private val fm: Floater,
+    private val screenWidth: Int,
+    private val screenHeight: Int
+) : View.OnTouchListener {
 
     private val context = fm.context
     private val slop = ViewConfiguration.get(context).scaledTouchSlop
-    val screenWidth: Int
-    val screenHeight: Int
 
     private var startX = 0f
     private var startY = 0f
     private var lastX = 0f
     private var lastY = 0f
-
-    init {
-        val displayMetrics = Resources.getSystem().displayMetrics
-        screenWidth = displayMetrics.widthPixels
-        screenHeight = displayMetrics.heightPixels
-    }
 
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
         when (event?.action) {
