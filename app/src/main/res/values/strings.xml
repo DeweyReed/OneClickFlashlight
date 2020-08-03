@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">1-Click Flashlight</string>
+    <string name="app_name">One Click Flashlight</string>
 
     <string name="flashlight_not_found">Unable to find a camera flashlight.</string>
 
@@ -19,7 +19,7 @@
 
     <string name="shortcuts_toggle_key" translatable="false">key_shortcuts_toggle</string>
     <string name="shortcuts_toggle_title">Flashlight</string>
-    <string name="shortcuts_toggle_desp">A normal 1-Click Flashlight shortcut.</string>
+    <string name="shortcuts_toggle_desp">A normal One Click Flashlight shortcut.</string>
 
     <string name="shortcuts_anti_touch_key" translatable="false">key_shortcuts_anti_touch</string>
     <string name="shortcuts_anti_touch_title">Anti Touch</string>
@@ -45,7 +45,7 @@
     <string name="shortcuts_floating_window_key" translatable="false">key_shortcuts_floating_window</string>
     <string name="shortcuts_floating_window_title">Floating Window</string>
     <string name="shortcuts_floating_window_desp">A floating button to control the flashlight.</string>
-    <string name="floating_window_service_title">1-Click Flashlight Floating Window</string>
+    <string name="floating_window_service_title">One Click Flashlight Floating Window</string>
     <string name="floating_window_service_desp">Click here to close the floating window.</string>
 
     <string name="about">About</string>
