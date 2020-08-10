@@ -189,9 +189,9 @@ private class Floater(
                 currentOrientation = newOrientation
                 if (isViewAdded) {
                     if (newOrientation == Configuration.ORIENTATION_PORTRAIT) {
-                        updatePos(x = screenWidth / 2, y = screenHeight / 2)
+                        updatePos(x = 0, y = screenHeight / 3)
                     } else {
-                        updatePos(x = screenHeight / 2, y = screenWidth / 2)
+                        updatePos(x = 0, y = screenWidth / 3)
                     }
                 }
             }
@@ -208,7 +208,7 @@ private class Floater(
         wm.addView(view, lp)
         isViewAdded = true
 
-        updatePos(x = screenWidth / 2, y = screenHeight / 2)
+        updatePos(x = 0, y = screenHeight / 3)
 
         context.registerReceiver(
             orientationReceiver,
