@@ -34,6 +34,12 @@ class AntiTouchActivity : AppCompatActivity() {
             true
         }
 
+        lifecycle.addObserver(object : DefaultLifecycleObserver {
+            override fun onResume(owner: LifecycleOwner) {
+                toFullScreen()
+            }
+        })
+
         val ordinal = intent?.getIntExtra(EXTRA_TYPE, 0) ?: 0
         val observer = when (FlashlightShortcut.values()[ordinal]) {
             FlashlightShortcut.AntiTouch -> {
