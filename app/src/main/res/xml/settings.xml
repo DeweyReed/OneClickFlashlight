@@ -31,6 +31,12 @@
             app:title="@string/shortcuts_ephemeral_anti_touch_title" />
 
         <Preference
+            app:icon="@drawable/settings_delayed_anti_touch"
+            app:key="@string/shortcuts_delayed_anti_touch_key"
+            app:summary="@string/shortcuts_delayed_anti_touch_desp"
+            app:title="@string/shortcuts_delayed_anti_touch_title" />
+
+        <Preference
             app:icon="@drawable/settings_on_off_anti_touch"
             app:key="@string/shortcuts_on_off_anti_touch_key"
             app:summary="@string/shortcuts_on_off_anti_touch_desp"

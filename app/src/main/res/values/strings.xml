@@ -30,6 +30,11 @@
     <string name="shortcuts_ephemeral_anti_touch_title">Ephemeral Anti Touch</string>
     <string name="shortcuts_ephemeral_anti_touch_desp">Anti Touch + when the Anti-Touch overlay is obstructed(including turning the screen off), the overlay and the flashlight will be closed immediately.</string>
 
+    <string name="shortcuts_delayed_anti_touch_key" translatable="false">key_shortcuts_delayed</string>
+    <string name="shortcuts_delayed_anti_touch_title">Delayed Anti Touch</string>
+    <string name="shortcuts_delayed_anti_touch_desp">Anti Touch + After the screen is off, wait several seconds before turning off the flashlight.</string>
+    <string name="shortcuts_delayed_anti_touch_delay_input_title">Delay(Seconds)</string>
+
     <string name="shortcuts_on_off_anti_touch_key" translatable="false">key_shortcuts_on_off</string>
     <string name="shortcuts_on_off_anti_touch_title">On Off Anti Touch</string>
     <string name="shortcuts_on_off_anti_touch_desp">Anti Touch + you can control the flashlight by turning the screen on and off.</string>

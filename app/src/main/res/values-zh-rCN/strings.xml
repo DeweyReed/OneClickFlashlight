@@ -27,6 +27,10 @@
     <string name="shortcuts_ephemeral_anti_touch_title">临时防触碰</string>
     <string name="shortcuts_ephemeral_anti_touch_desp">防触碰 + 在防触碰窗口被遮挡（包括关闭手机屏幕）时，立即关闭防触碰窗口和闪光灯。</string>
 
+    <string name="shortcuts_delayed_anti_touch_title">延时防触碰</string>
+    <string name="shortcuts_delayed_anti_touch_desp">防触碰 + 在关闭屏幕后再等待几秒后关闭闪光灯。</string>
+    <string name="shortcuts_delayed_anti_touch_delay_input_title">延时（秒）</string>
+
     <string name="shortcuts_on_off_anti_touch_title">开关防触碰</string>
     <string name="shortcuts_on_off_anti_touch_desp">防触碰 + 通过开关屏幕来控制闪光灯。</string>
 

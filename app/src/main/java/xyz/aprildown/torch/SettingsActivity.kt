@@ -8,10 +8,16 @@ import android.net.Uri
 import android.os.Binder
 import android.os.Bundle
 import android.provider.Settings
+import android.view.LayoutInflater
+import android.view.WindowManager
+import android.view.inputmethod.EditorInfo
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import xyz.aprildown.torch.databinding.DialogDelayInputBinding
 
 class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +63,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
         findPreference<Preference>(getString(R.string.shortcuts_ephemeral_anti_touch_key))
             ?.setOnPreferenceClickListener {
                 context.pinShortcut(FlashlightShortcut.EphemeralAntiTouch)
+                true
+            }
+        findPreference<Preference>(getString(R.string.shortcuts_delayed_anti_touch_key))
+            ?.setOnPreferenceClickListener {
+                context.requestDelay {
+                    context.pinShortcut(FlashlightShortcut.DelayedAntiTouch, delayInMilli = it)
+                }
                 true
             }
         findPreference<Preference>(getString(R.string.shortcuts_on_off_anti_touch_key))
@@ -129,5 +142,40 @@ private fun Context.canDrawOverlays(): Boolean = if (isMOrLater()) {
         ) as Int
     } catch (e: Exception) {
         false
+    }
+}
+
+private fun Context.requestDelay(onResult: (Long) -> Unit) {
+    val builder = MaterialAlertDialogBuilder(this)
+        .setTitle(R.string.shortcuts_delayed_anti_touch_delay_input_title)
+        .setPositiveButton(android.R.string.ok, null)
+
+    val view =
+        DialogDelayInputBinding.inflate(LayoutInflater.from(this))
+    view.editDelayInput.requestFocus()
+
+    builder.setView(view.root)
+
+    val dialog = builder.create()
+    dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
+    dialog.show()
+    dialog.setOnDismissListener {
+        dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+    }
+
+    val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+
+    view.editDelayInput.setOnEditorActionListener { _, actionId, _ ->
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            positiveButton.performClick()
+            true
+        } else {
+            false
+        }
+    }
+
+    positiveButton.setOnClickListener {
+        dialog.dismiss()
+        onResult.invoke((view.editDelayInput.text?.toString()?.toLongOrNull() ?: 0L) * 1_000L)
     }
 }

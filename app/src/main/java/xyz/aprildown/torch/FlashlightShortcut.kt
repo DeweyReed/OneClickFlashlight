@@ -3,6 +3,9 @@ package xyz.aprildown.torch
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 
+/**
+ * Add the new enum to the end because the enum's ordinal is used by shortcuts.
+ */
 enum class FlashlightShortcut(@StringRes val nameRes: Int, @DrawableRes val iconRes: Int) {
     Toggle(
         nameRes = R.string.shortcuts_toggle_title,
@@ -31,5 +34,9 @@ enum class FlashlightShortcut(@StringRes val nameRes: Int, @DrawableRes val icon
     FloatingWindow(
         nameRes = R.string.shortcuts_floating_window_title,
         iconRes = R.drawable.shortcut_floating_window
-    )
+    ),
+    DelayedAntiTouch(
+        nameRes = R.string.shortcuts_delayed_anti_touch_title,
+        iconRes = R.drawable.shortcut_delayed_anti_touch
+    ),
 }

@@ -3,6 +3,8 @@ package xyz.aprildown.torch
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
@@ -12,6 +14,9 @@ import androidx.lifecycle.LifecycleOwner
 import xyz.aprildown.torch.databinding.ActivityAntiTouchBinding
 
 class AntiTouchActivity : AppCompatActivity() {
+
+    private var countDownHandler = Handler(Looper.getMainLooper())
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityAntiTouchBinding.inflate(layoutInflater)
@@ -83,6 +88,26 @@ class AntiTouchActivity : AppCompatActivity() {
                     }
                 }
             }
+            FlashlightShortcut.DelayedAntiTouch -> {
+                object : DefaultLifecycleObserver {
+                    override fun onCreate(owner: LifecycleOwner) {
+                        on()
+                    }
+
+                    override fun onStart(owner: LifecycleOwner) {
+                        countDownHandler.removeCallbacksAndMessages(null)
+                    }
+
+                    override fun onStop(owner: LifecycleOwner) {
+                        countDownHandler.postDelayed(
+                            {
+                                done()
+                            },
+                            intent?.getLongExtra(EXTRA_DELAY, 0L) ?: 0L
+                        )
+                    }
+                }
+            }
             else -> null
         }
         if (observer != null) {
@@ -109,16 +134,23 @@ class AntiTouchActivity : AppCompatActivity() {
     }
 
     private fun done() {
+        countDownHandler.removeCallbacksAndMessages(null)
         off()
         finish()
     }
 
     companion object {
         private const val EXTRA_TYPE = "type"
+        private const val EXTRA_DELAY = "delay"
 
-        fun getIntent(context: Context, type: FlashlightShortcut): Intent {
+        fun getIntent(
+            context: Context,
+            type: FlashlightShortcut,
+            delayInMilli: Long = 0L
+        ): Intent {
             return Intent(context, AntiTouchActivity::class.java)
                 .putExtra(EXTRA_TYPE, type.ordinal)
+                .putExtra(EXTRA_DELAY, delayInMilli)
         }
     }
 }

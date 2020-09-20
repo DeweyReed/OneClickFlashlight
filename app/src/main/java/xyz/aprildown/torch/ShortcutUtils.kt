@@ -5,7 +5,10 @@ import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 
-fun Context.pinShortcut(type: FlashlightShortcut) {
+fun Context.pinShortcut(
+    type: FlashlightShortcut,
+    delayInMilli: Long = 0L
+) {
     ShortcutManagerCompat.requestPinShortcut(
         this,
         ShortcutInfoCompat.Builder(this, System.currentTimeMillis().toString())
@@ -20,6 +23,13 @@ fun Context.pinShortcut(type: FlashlightShortcut) {
                     FlashlightShortcut.EphemeralAntiTouch,
                     FlashlightShortcut.OnOffAntiTouch -> {
                         AntiTouchActivity.getIntent(this@pinShortcut, type)
+                    }
+                    FlashlightShortcut.DelayedAntiTouch -> {
+                        AntiTouchActivity.getIntent(
+                            context = this@pinShortcut,
+                            type = type,
+                            delayInMilli = delayInMilli
+                        )
                     }
                     FlashlightShortcut.BrightScreen,
                     FlashlightShortcut.Flashbang -> {
