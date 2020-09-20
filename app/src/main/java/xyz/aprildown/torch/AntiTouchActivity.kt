@@ -21,18 +21,16 @@ import xyz.aprildown.torch.databinding.ActivityAntiTouchBinding
 
 class AntiTouchActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityAntiTouchBinding
-
     private var countDownHandler = Handler(Looper.getMainLooper())
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAntiTouchBinding.inflate(layoutInflater)
+        val binding = ActivityAntiTouchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setUpShowWhenLocked()
-        setUpFullscreen()
+        setUpFullscreen(binding.root)
 
         val ordinal = intent?.getIntExtra(EXTRA_TYPE, 0) ?: 0
         val observer = when (FlashlightShortcut.values()[ordinal]) {
@@ -139,25 +137,24 @@ class AntiTouchActivity : AppCompatActivity() {
         )
     }
 
-    private fun setUpFullscreen() {
+    private fun setUpFullscreen(rootView: View) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            setUpFullscreenR()
+            setUpFullscreenR(rootView)
         } else {
-            setUpFullscreenPreR()
+            setUpFullscreenPreR(rootView)
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
     @SuppressLint("ClickableViewAccessibility")
-    private fun setUpFullscreenR() {
+    private fun setUpFullscreenR(rootView: View) {
         window.setDecorFitsSystemWindows(true)
-        binding.root.windowInsetsController
+        rootView.windowInsetsController
             ?.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_BARS_BY_SWIPE
 
         fun toFullScreen() {
-            binding.root.windowInsetsController?.hide(WindowInsets.Type.systemBars())
+            rootView.windowInsetsController?.hide(WindowInsets.Type.systemBars())
         }
-
 
         toFullScreen()
         window?.decorView?.setOnTouchListener { _, event ->
@@ -176,14 +173,14 @@ class AntiTouchActivity : AppCompatActivity() {
 
     @Suppress("DEPRECATION")
     @SuppressLint("ClickableViewAccessibility")
-    private fun setUpFullscreenPreR() {
+    private fun setUpFullscreenPreR(rootView: View) {
         val fullScreenSystemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE or
             View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
             View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
             View.SYSTEM_UI_FLAG_FULLSCREEN
 
         fun toFullScreen() {
-            binding.root.systemUiVisibility = fullScreenSystemUiVisibility
+            rootView.systemUiVisibility = fullScreenSystemUiVisibility
         }
 
         toFullScreen()
