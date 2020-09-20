@@ -12,6 +12,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
+import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.DefaultLifecycleObserver
@@ -30,6 +31,7 @@ class AntiTouchActivity : AppCompatActivity() {
         binding = ActivityAntiTouchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setUpShowWhenLocked()
         setUpFullscreen()
 
         val ordinal = intent?.getIntExtra(EXTRA_TYPE, 0) ?: 0
@@ -124,6 +126,17 @@ class AntiTouchActivity : AppCompatActivity() {
         countDownHandler.removeCallbacksAndMessages(null)
         off()
         finish()
+    }
+
+    private fun setUpShowWhenLocked() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            setShowWhenLocked(true)
+        }
+        @Suppress("DEPRECATION")
+        window.addFlags(
+            WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
+                WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON
+        )
     }
 
     private fun setUpFullscreen() {
