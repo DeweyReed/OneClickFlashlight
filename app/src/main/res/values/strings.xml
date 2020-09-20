@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">One Click Flashlight</string>
+    <string name="app_name">One-Click Flashlight</string>
 
     <string name="flashlight_not_found">Unable to find a camera flashlight.</string>
 
@@ -19,7 +19,7 @@
 
     <string name="shortcuts_toggle_key" translatable="false">key_shortcuts_toggle</string>
     <string name="shortcuts_toggle_title">Flashlight</string>
-    <string name="shortcuts_toggle_desp">A normal One Click Flashlight shortcut.</string>
+    <string name="shortcuts_toggle_desp">Add One-Click Flashlight shortcut.</string>
 
     <string name="shortcuts_anti_touch_key" translatable="false">key_shortcuts_anti_touch</string>
     <string name="shortcuts_anti_touch_title">Anti Touch</string>
@@ -28,16 +28,16 @@
 
     <string name="shortcuts_ephemeral_anti_touch_key" translatable="false">key_shortcuts_ephemeral_anti_touch</string>
     <string name="shortcuts_ephemeral_anti_touch_title">Ephemeral Anti Touch</string>
-    <string name="shortcuts_ephemeral_anti_touch_desp">Anti Touch + when the Anti-Touch overlay is obstructed(including turning the screen off), the overlay and the flashlight will be closed immediately.</string>
+    <string name="shortcuts_ephemeral_anti_touch_desp">Anti Touch + when you turn off the screen, the flashlight will be closed immediately.</string>
 
     <string name="shortcuts_delayed_anti_touch_key" translatable="false">key_shortcuts_delayed</string>
     <string name="shortcuts_delayed_anti_touch_title">Delayed Anti Touch</string>
-    <string name="shortcuts_delayed_anti_touch_desp">Anti Touch + After the screen is off, wait several seconds before turning off the flashlight.</string>
+    <string name="shortcuts_delayed_anti_touch_desp">Anti Touch + After you turn off the screen, wait several seconds before turning off the flashlight.</string>
     <string name="shortcuts_delayed_anti_touch_delay_input_title">Delay(Seconds)</string>
 
     <string name="shortcuts_on_off_anti_touch_key" translatable="false">key_shortcuts_on_off</string>
     <string name="shortcuts_on_off_anti_touch_title">On Off Anti Touch</string>
-    <string name="shortcuts_on_off_anti_touch_desp">Anti Touch + you can control the flashlight by turning the screen on and off.</string>
+    <string name="shortcuts_on_off_anti_touch_desp">Anti Touch + You can control the flashlight by turning on and off the screen.</string>
 
     <string name="shortcuts_bright_screen_key" translatable="false">key_shortcuts_bright_screen</string>
     <string name="shortcuts_bright_screen_title">Bright Screen</string>
@@ -50,7 +50,7 @@
     <string name="shortcuts_floating_window_key" translatable="false">key_shortcuts_floating_window</string>
     <string name="shortcuts_floating_window_title">Floating Window</string>
     <string name="shortcuts_floating_window_desp">A floating button to control the flashlight.</string>
-    <string name="floating_window_service_title">One Click Flashlight Floating Window</string>
+    <string name="floating_window_service_title">One-Click Flashlight Floating Window</string>
     <string name="floating_window_service_desp">Click here to close the floating window.</string>
 
     <string name="about">About</string>

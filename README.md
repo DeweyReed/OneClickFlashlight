@@ -1,4 +1,4 @@
-# One Click Flashlight
+# One-Click Flashlight
 
 <a href='https://play.google.com/store/apps/details?id=xyz.aprildown.torch'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width=250/></a> [GET IT ON GITHUB](https://github.com/deweyreed/oneclickflashlight/releases)
 
