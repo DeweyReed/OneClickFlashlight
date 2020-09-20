@@ -1,5 +1,6 @@
 package xyz.aprildown.torch
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -17,6 +18,7 @@ class AntiTouchActivity : AppCompatActivity() {
 
     private var countDownHandler = Handler(Looper.getMainLooper())
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityAntiTouchBinding.inflate(layoutInflater)
