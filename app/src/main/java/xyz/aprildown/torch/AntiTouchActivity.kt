@@ -3,12 +3,16 @@ package xyz.aprildown.torch
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
+import android.view.WindowInsets
+import android.view.WindowInsetsController
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -16,36 +20,17 @@ import xyz.aprildown.torch.databinding.ActivityAntiTouchBinding
 
 class AntiTouchActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityAntiTouchBinding
+
     private var countDownHandler = Handler(Looper.getMainLooper())
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityAntiTouchBinding.inflate(layoutInflater)
+        binding = ActivityAntiTouchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val fullScreenSystemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE or
-            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
-            View.SYSTEM_UI_FLAG_FULLSCREEN
-
-        fun toFullScreen() {
-            binding.root.systemUiVisibility = fullScreenSystemUiVisibility
-        }
-
-        toFullScreen()
-        window?.decorView?.setOnTouchListener { _, event ->
-            if (event.actionMasked == MotionEvent.ACTION_MOVE) {
-                toFullScreen()
-            }
-            true
-        }
-
-        lifecycle.addObserver(object : DefaultLifecycleObserver {
-            override fun onResume(owner: LifecycleOwner) {
-                toFullScreen()
-            }
-        })
+        setUpFullscreen()
 
         val ordinal = intent?.getIntExtra(EXTRA_TYPE, 0) ?: 0
         val observer = when (FlashlightShortcut.values()[ordinal]) {
@@ -139,6 +124,68 @@ class AntiTouchActivity : AppCompatActivity() {
         countDownHandler.removeCallbacksAndMessages(null)
         off()
         finish()
+    }
+
+    private fun setUpFullscreen() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            setUpFullscreenR()
+        } else {
+            setUpFullscreenPreR()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setUpFullscreenR() {
+        window.setDecorFitsSystemWindows(true)
+        binding.root.windowInsetsController
+            ?.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_BARS_BY_SWIPE
+
+        fun toFullScreen() {
+            binding.root.windowInsetsController?.hide(WindowInsets.Type.systemBars())
+        }
+
+
+        toFullScreen()
+        window?.decorView?.setOnTouchListener { _, event ->
+            if (event.actionMasked == MotionEvent.ACTION_MOVE) {
+                toFullScreen()
+            }
+            true
+        }
+
+        lifecycle.addObserver(object : DefaultLifecycleObserver {
+            override fun onResume(owner: LifecycleOwner) {
+                toFullScreen()
+            }
+        })
+    }
+
+    @Suppress("DEPRECATION")
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setUpFullscreenPreR() {
+        val fullScreenSystemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE or
+            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
+            View.SYSTEM_UI_FLAG_FULLSCREEN
+
+        fun toFullScreen() {
+            binding.root.systemUiVisibility = fullScreenSystemUiVisibility
+        }
+
+        toFullScreen()
+        window?.decorView?.setOnTouchListener { _, event ->
+            if (event.actionMasked == MotionEvent.ACTION_MOVE) {
+                toFullScreen()
+            }
+            true
+        }
+
+        lifecycle.addObserver(object : DefaultLifecycleObserver {
+            override fun onResume(owner: LifecycleOwner) {
+                toFullScreen()
+            }
+        })
     }
 
     companion object {
