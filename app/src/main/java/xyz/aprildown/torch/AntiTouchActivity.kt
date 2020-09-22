@@ -86,12 +86,18 @@ class AntiTouchActivity : AppCompatActivity() {
                     }
 
                     override fun onStop(owner: LifecycleOwner) {
-                        countDownHandler.postDelayed(
-                            {
-                                done()
-                            },
-                            intent?.getLongExtra(EXTRA_DELAY, 0L) ?: 0L
-                        )
+                        if (!isFinishing) {
+                            countDownHandler.postDelayed(
+                                {
+                                    done()
+                                },
+                                intent?.getLongExtra(EXTRA_DELAY, 0L) ?: 0L
+                            )
+                        }
+                    }
+
+                    override fun onDestroy(owner: LifecycleOwner) {
+                        done()
                     }
                 }
             }
