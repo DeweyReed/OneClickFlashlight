@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.PowerManager
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
@@ -87,12 +88,12 @@ class AntiTouchActivity : AppCompatActivity() {
 
                     override fun onStop(owner: LifecycleOwner) {
                         if (!isFinishing) {
-                            countDownHandler.postDelayed(
-                                {
-                                    done()
-                                },
-                                intent?.getLongExtra(EXTRA_DELAY, 0L) ?: 0L
-                            )
+                            val time = intent?.getLongExtra(EXTRA_DELAY, 0L) ?: 0L
+                            countDownHandler.postDelayed({ done() }, time)
+                            (getSystemService(Context.POWER_SERVICE) as PowerManager).newWakeLock(
+                                PowerManager.PARTIAL_WAKE_LOCK,
+                                "OneClickFlashlight:DelayedAntiTouch"
+                            ).acquire(time + 500L /* More time for work. */)
                         }
                     }
 
