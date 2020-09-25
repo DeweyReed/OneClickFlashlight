@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -17,6 +18,8 @@ class BrightScreenActivity : AppCompatActivity() {
         val view = View(this)
         view.setBackgroundColor(Color.WHITE)
         setContentView(view)
+
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         window?.run {
             attributes = attributes.apply { screenBrightness = 1f }
