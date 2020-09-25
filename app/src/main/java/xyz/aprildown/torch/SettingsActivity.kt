@@ -8,6 +8,8 @@ import android.net.Uri
 import android.os.Binder
 import android.os.Bundle
 import android.provider.Settings
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
@@ -166,13 +168,28 @@ private fun Context.requestDelay(onResult: (Long) -> Unit) {
     val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
 
     view.editDelayInput.setOnEditorActionListener { _, actionId, _ ->
-        if (actionId == EditorInfo.IME_ACTION_DONE) {
+        if (actionId == EditorInfo.IME_ACTION_DONE && positiveButton.isEnabled) {
             positiveButton.performClick()
             true
         } else {
             false
         }
     }
+
+    view.editDelayInput.addTextChangedListener(object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+        override fun afterTextChanged(s: Editable?) = Unit
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            val input = s?.toString()?.toIntOrNull()
+            if (input != null && input in 1..10) {
+                view.inputDelayInput.error = null
+                positiveButton.isEnabled = true
+            } else {
+                view.inputDelayInput.error = "1s ~ 10s"
+                positiveButton.isEnabled = false
+            }
+        }
+    })
 
     positiveButton.setOnClickListener {
         dialog.dismiss()
