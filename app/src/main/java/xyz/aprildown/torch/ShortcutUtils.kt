@@ -12,7 +12,15 @@ fun Context.pinShortcut(
     ShortcutManagerCompat.requestPinShortcut(
         this,
         ShortcutInfoCompat.Builder(this, System.currentTimeMillis().toString())
-            .setShortLabel(getText(type.nameRes))
+            .setShortLabel(
+                buildString {
+                    if (type == FlashlightShortcut.DelayedAntiTouch && delayInMilli > 0L) {
+                        append(delayInMilli / 1000L)
+                        append("s")
+                    }
+                    append(getText(type.nameRes))
+                }
+            )
             .setIcon(IconCompat.createWithResource(this, type.iconRes))
             .apply {
                 val intent = when (type) {
