@@ -10,6 +10,7 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.PixelFormat
 import android.hardware.camera2.CameraManager
+import android.os.Build
 import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
@@ -18,7 +19,6 @@ import android.view.WindowManager
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.GravityCompat
 import androidx.core.widget.ImageViewCompat
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -61,7 +61,7 @@ class FloatingWindowService : LifecycleService() {
                         this,
                         0,
                         getToggleIntent(this),
-                        PendingIntent.FLAG_UPDATE_CURRENT
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                     )
                 )
                 .setSmallIcon(R.drawable.settings_floating_window)
@@ -151,8 +151,8 @@ private class Floater(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         width = initialWidth
         height = initialHeight
-        gravity = Gravity.TOP or GravityCompat.START
-        type = if (isOOrLater()) {
+        gravity = Gravity.TOP or Gravity.START
+        type = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
         } else {
             @Suppress("DEPRECATION")

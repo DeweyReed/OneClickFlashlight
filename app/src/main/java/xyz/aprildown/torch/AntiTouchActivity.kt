@@ -11,11 +11,12 @@ import android.os.PowerManager
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
-import android.view.WindowInsets
-import android.view.WindowInsetsController
 import android.view.WindowManager
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import xyz.aprildown.torch.databinding.ActivityAntiTouchBinding
@@ -145,25 +146,17 @@ class AntiTouchActivity : AppCompatActivity() {
     }
 
     private fun setUpFullscreen(rootView: View) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            setUpFullscreenR(rootView)
-        } else {
-            setUpFullscreenPreR(rootView)
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.R)
-    @SuppressLint("ClickableViewAccessibility")
-    private fun setUpFullscreenR(rootView: View) {
-        window.setDecorFitsSystemWindows(true)
-        rootView.windowInsetsController
-            ?.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_BARS_BY_SWIPE
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        ViewCompat.getWindowInsetsController(rootView)
+            ?.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_BARS_BY_SWIPE
 
         fun toFullScreen() {
-            rootView.windowInsetsController?.hide(WindowInsets.Type.systemBars())
+            ViewCompat.getWindowInsetsController(rootView)
+                ?.hide(WindowInsetsCompat.Type.systemBars())
         }
 
         toFullScreen()
+        @Suppress("ClickableViewAccessibility")
         window?.decorView?.setOnTouchListener { _, event ->
             if (event.actionMasked == MotionEvent.ACTION_MOVE) {
                 toFullScreen()
@@ -171,38 +164,13 @@ class AntiTouchActivity : AppCompatActivity() {
             true
         }
 
-        lifecycle.addObserver(object : DefaultLifecycleObserver {
-            override fun onResume(owner: LifecycleOwner) {
-                toFullScreen()
+        lifecycle.addObserver(
+            object : DefaultLifecycleObserver {
+                override fun onResume(owner: LifecycleOwner) {
+                    toFullScreen()
+                }
             }
-        })
-    }
-
-    @Suppress("DEPRECATION")
-    @SuppressLint("ClickableViewAccessibility")
-    private fun setUpFullscreenPreR(rootView: View) {
-        val fullScreenSystemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE or
-            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
-            View.SYSTEM_UI_FLAG_FULLSCREEN
-
-        fun toFullScreen() {
-            rootView.systemUiVisibility = fullScreenSystemUiVisibility
-        }
-
-        toFullScreen()
-        window?.decorView?.setOnTouchListener { _, event ->
-            if (event.actionMasked == MotionEvent.ACTION_MOVE) {
-                toFullScreen()
-            }
-            true
-        }
-
-        lifecycle.addObserver(object : DefaultLifecycleObserver {
-            override fun onResume(owner: LifecycleOwner) {
-                toFullScreen()
-            }
-        })
+        )
     }
 
     companion object {

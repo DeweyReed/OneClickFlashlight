@@ -88,7 +88,7 @@ class FlashlightService : LifecycleService() {
                     this,
                     0,
                     getToggleIntent(this),
-                    PendingIntent.FLAG_UPDATE_CURRENT
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
             )
             .setSmallIcon(R.drawable.ic_logo)
@@ -161,7 +161,7 @@ class FlashlightService : LifecycleService() {
 
 suspend fun CameraManager.isTorchOn(): Boolean = try {
     withTimeout(500) {
-        suspendCancellableCoroutine<Boolean> { cont ->
+        suspendCancellableCoroutine { cont ->
             var isResumed = false
             val callback = object : CameraManager.TorchCallback() {
                 override fun onTorchModeChanged(cameraId: String, enabled: Boolean) {

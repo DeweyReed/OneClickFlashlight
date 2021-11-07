@@ -52,13 +52,15 @@ resourcePlaceholders {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation libs.kotlin_stdlib_jdk7
+    implementation libs.kotlin_coroutines_core
 
     implementation libs.androidx_appcompat
     implementation libs.androidx_preference
     implementation libs.androidx_lifecycle_runtime
     implementation libs.androidx_lifecycle_service
     implementation libs.androidx_lifecycle_compiler
+
+    implementation libs.androidx_core_ktx
 
     implementation libs.material
 

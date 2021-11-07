@@ -41,7 +41,7 @@ class MainActivity : Activity() {
                 context,
                 0,
                 getIntent(context).setAction(ACTION_SHORTCUT_CREATED),
-                PendingIntent.FLAG_UPDATE_CURRENT
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             ).intentSender
         }
 

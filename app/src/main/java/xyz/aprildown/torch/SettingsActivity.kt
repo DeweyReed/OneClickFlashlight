@@ -1,11 +1,9 @@
 package xyz.aprildown.torch
 
-import android.app.AppOpsManager
 import android.content.Context
 import android.content.Intent
 import android.hardware.camera2.CameraManager
 import android.net.Uri
-import android.os.Binder
 import android.os.Bundle
 import android.provider.Settings
 import android.text.Editable
@@ -13,6 +11,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.Preference
@@ -35,6 +34,9 @@ class SettingsActivity : AppCompatActivity() {
 class SettingsFragment : PreferenceFragmentCompat() {
 
     private lateinit var cm: CameraManager
+
+    private val manageOverlayPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,13 +94,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         findPreference<Preference>(getString(R.string.shortcuts_floating_window_key))
             ?.setOnPreferenceClickListener {
-                if (context.canDrawOverlays()) {
+                if (Settings.canDrawOverlays(context)) {
                     context.pinShortcut(FlashlightShortcut.FloatingWindow)
                 } else {
-                    startActivityForResult(
+                    manageOverlayPermissionLauncher.launch(
                         Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
-                            .setData(Uri.parse("package:${context.packageName}")),
-                        0
+                            .setData(Uri.parse("package:${context.packageName}"))
                     )
                 }
 
@@ -121,29 +122,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onPause() {
         super.onPause()
         cm.unregisterTorchCallback(torchCallback)
-    }
-}
-
-private fun Context.canDrawOverlays(): Boolean = if (isMOrLater()) {
-    Settings.canDrawOverlays(this)
-} else {
-    try {
-        val manager = getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
-        val dispatchMethod = AppOpsManager::class.java.getMethod(
-            "checkOp",
-            Int::class.javaPrimitiveType,
-            Int::class.javaPrimitiveType,
-            String::class.java
-        )
-        // AppOpsManager.OP_SYSTEM_ALERT_WINDOW = 24
-        AppOpsManager.MODE_ALLOWED == dispatchMethod.invoke(
-            manager,
-            24,
-            Binder.getCallingUid(),
-            packageName
-        ) as Int
-    } catch (e: Exception) {
-        false
     }
 }
 
