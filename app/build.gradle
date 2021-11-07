@@ -17,8 +17,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         archivesBaseName = "OneClickFlashlight-v${versionName}-${versionCode}"
-
-        buildConfigField("String", "APP_CENTER_SECRET", "\"" + getAppCenterSecret() + "\"")
     }
 
     buildTypes {
@@ -36,13 +34,6 @@ android {
     buildFeatures {
         viewBinding true
     }
-}
-
-def getAppCenterSecret() {
-    def keysFile = project.rootProject.file("local.properties")
-    def keysProperties = new Properties()
-    keysProperties.load(new FileInputStream(keysFile))
-    return keysProperties['appCenterSecret']
 }
 
 resourcePlaceholders {
