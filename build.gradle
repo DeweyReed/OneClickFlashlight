@@ -5,8 +5,6 @@ buildscript {
     repositories {
         google()
         gradlePluginPortal()
-        jcenter()
-        
     }
     dependencies {
         classpath "com.android.tools.build:gradle:${versions.agp}"
@@ -23,8 +21,7 @@ apply plugin: 'com.github.ben-manes.versions'
 allprojects {
     repositories {
         google()
-        jcenter()
-        
+        mavenCentral()
     }
 }
 
