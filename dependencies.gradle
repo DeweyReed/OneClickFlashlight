@@ -25,8 +25,5 @@ ext {
 
             leak_cannary               : 'com.squareup.leakcanary:leakcanary-android:2.7',
 
-            appcenter_analytics        : 'com.microsoft.appcenter:appcenter-analytics:4.2.0',
-            appcenter_crashes          : 'com.microsoft.appcenter:appcenter-crashes:4.2.0',
-
     ]
 }

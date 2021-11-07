@@ -64,7 +64,4 @@ dependencies {
 
     debugImplementation libs.leak_cannary
 
-    implementation libs.appcenter_analytics
-    implementation libs.appcenter_crashes
-
 }
