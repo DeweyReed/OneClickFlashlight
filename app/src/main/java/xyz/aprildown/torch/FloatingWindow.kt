@@ -37,6 +37,14 @@ class FloatingWindowService : LifecycleService() {
             ACTION_TOGGLE -> {
                 if (isRunning) {
                     stopSelf()
+
+                    if (defaultSharedPreferences.getBoolean(
+                            getString(R.string.shortcuts_floating_window_close_with_the_flashlight_key),
+                            false
+                        )
+                    ) {
+                        FlashlightService.turn(this, false)
+                    }
                 } else {
                     bringUp()
                 }
@@ -53,6 +61,7 @@ class FloatingWindowService : LifecycleService() {
 
         startForeground(
             2,
+            @Suppress("LaunchActivityFromNotification")
             NotificationCompat.Builder(this, FlashlightService.CHANNEL_ID)
                 .setContentTitle(getText(R.string.floating_window_service_title))
                 .setContentText(getText(R.string.floating_window_service_desp))
@@ -81,6 +90,9 @@ class FloatingWindowService : LifecycleService() {
 
         // UI
         val cm = getSystemService(Context.CAMERA_SERVICE) as CameraManager
+
+        /** [CameraManager.registerTorchCallback] */
+        var ignoreEvent = true
         val torchCallback = object : CameraManager.TorchCallback() {
             override fun onTorchModeChanged(cameraId: String, enabled: Boolean) {
                 ImageViewCompat.setImageTintList(
@@ -96,6 +108,16 @@ class FloatingWindowService : LifecycleService() {
                         )
                     )
                 )
+                if (!ignoreEvent &&
+                    !enabled &&
+                    defaultSharedPreferences.getBoolean(
+                        getString(R.string.shortcuts_floating_window_close_with_the_flashlight_key),
+                        false
+                    )
+                ) {
+                    stopSelf()
+                }
+                ignoreEvent = false
             }
         }
         var floater: Floater? = null
@@ -107,6 +129,7 @@ class FloatingWindowService : LifecycleService() {
                         view = fab
                     )
                     floater?.show()
+                    ignoreEvent = true
                     cm.registerTorchCallback(torchCallback, null)
                     isRunning = true
                 }
@@ -119,6 +142,14 @@ class FloatingWindowService : LifecycleService() {
                 }
             }
         )
+
+        if (defaultSharedPreferences.getBoolean(
+                getString(R.string.shortcuts_floating_window_turn_on_the_flashlight_key),
+                false
+            )
+        ) {
+            FlashlightService.turn(this, true)
+        }
     }
 
     companion object {

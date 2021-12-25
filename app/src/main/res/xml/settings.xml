@@ -54,11 +54,31 @@
             app:summary="@string/shortcuts_flashbang_desp"
             app:title="@string/shortcuts_flashbang_title" />
 
-        <Preference
-            app:icon="@drawable/settings_floating_window"
-            app:key="@string/shortcuts_floating_window_key"
-            app:summary="@string/shortcuts_floating_window_desp"
-            app:title="@string/shortcuts_floating_window_title" />
+        <PreferenceCategory app:title="@string/shortcuts_floating_window_title">
+
+            <Preference
+                app:icon="@drawable/settings_floating_window"
+                app:key="@string/shortcuts_floating_window_key"
+                app:summary="@string/shortcuts_floating_window_desp"
+                app:title="@string/shortcuts_floating_window_title" />
+
+            <SwitchPreferenceCompat
+                android:defaultValue="false"
+                app:icon="@drawable/settings_flashlight"
+                app:key="@string/shortcuts_floating_window_turn_on_the_flashlight_key"
+                app:singleLineTitle="false"
+                app:summary="@string/shortcuts_floating_window_turn_on_the_flashlight_desp"
+                app:title="@string/shortcuts_floating_window_turn_on_the_flashlight_title" />
+
+            <SwitchPreferenceCompat
+                android:defaultValue="false"
+                app:icon="@drawable/settings_floating_window_close"
+                app:key="@string/shortcuts_floating_window_close_with_the_flashlight_key"
+                app:singleLineTitle="false"
+                app:summary="@string/shortcuts_floating_window_close_with_the_flashlight_desp"
+                app:title="@string/shortcuts_floating_window_close_with_the_flashlight_title" />
+
+        </PreferenceCategory>
 
     </PreferenceCategory>
 

@@ -44,6 +44,10 @@
     <string name="shortcuts_floating_window_desp">一个控制闪光灯的悬浮按钮。</string>
     <string name="floating_window_service_title">一键闪光灯悬浮窗</string>
     <string name="floating_window_service_desp">点此关闭悬浮窗</string>
+    <string name="shortcuts_floating_window_turn_on_the_flashlight_title">打开闪光灯</string>
+    <string name="shortcuts_floating_window_turn_on_the_flashlight_desp">打开悬浮窗时，打开闪光灯</string>
+    <string name="shortcuts_floating_window_close_with_the_flashlight_title">和闪光灯一同关闭</string>
+    <string name="shortcuts_floating_window_close_with_the_flashlight_desp">同时关闭悬浮窗和闪光灯</string>
 
     <string name="about">关于</string>
 
