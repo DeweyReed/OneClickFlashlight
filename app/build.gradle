@@ -49,7 +49,6 @@ dependencies {
     implementation libs.androidx_preference
     implementation libs.androidx_lifecycle_runtime
     implementation libs.androidx_lifecycle_service
-    implementation libs.androidx_lifecycle_compiler
 
     implementation libs.androidx_core_ktx
 
