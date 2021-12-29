@@ -111,7 +111,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                         .setPositiveButton(android.R.string.ok) { _, _ ->
                             context.pinShortcut(
                                 FlashlightShortcut.FloatingWindow,
-                                floatingWindowTurnOnTheFlashlight = binding.switchCloseWithTheFlashlight.isChecked,
+                                floatingWindowTurnOnTheFlashlight = binding.switchTurnOnTheFlashlight.isChecked,
                                 floatingWindowCloseWithTheFlashlight = binding.switchCloseWithTheFlashlight.isChecked,
                             )
                         }
