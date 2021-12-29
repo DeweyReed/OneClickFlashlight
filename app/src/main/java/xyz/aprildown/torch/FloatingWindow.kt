@@ -29,6 +29,8 @@ import kotlin.math.abs
 class FloatingWindowService : LifecycleService() {
 
     private var isRunning = false
+    private var turnOnTheFlashlight = false
+    private var closeWithTheFlashlight = false
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
@@ -38,14 +40,15 @@ class FloatingWindowService : LifecycleService() {
                 if (isRunning) {
                     stopSelf()
 
-                    if (defaultSharedPreferences.getBoolean(
-                            getString(R.string.shortcuts_floating_window_close_with_the_flashlight_key),
-                            false
-                        )
-                    ) {
+                    if (closeWithTheFlashlight) {
                         FlashlightService.turn(this, false)
                     }
                 } else {
+                    turnOnTheFlashlight =
+                        intent.getBooleanExtra(EXTRA_TURN_ON_THE_FLASHLIGHT, false)
+                    closeWithTheFlashlight =
+                        intent.getBooleanExtra(EXTRA_CLOSE_WITH_THE_FLASHLIGHT, false)
+
                     bringUp()
                 }
             }
@@ -108,13 +111,7 @@ class FloatingWindowService : LifecycleService() {
                         )
                     )
                 )
-                if (!ignoreEvent &&
-                    !enabled &&
-                    defaultSharedPreferences.getBoolean(
-                        getString(R.string.shortcuts_floating_window_close_with_the_flashlight_key),
-                        false
-                    )
-                ) {
+                if (!ignoreEvent && !enabled && closeWithTheFlashlight) {
                     stopSelf()
                 }
                 ignoreEvent = false
@@ -143,11 +140,7 @@ class FloatingWindowService : LifecycleService() {
             }
         )
 
-        if (defaultSharedPreferences.getBoolean(
-                getString(R.string.shortcuts_floating_window_turn_on_the_flashlight_key),
-                false
-            )
-        ) {
+        if (turnOnTheFlashlight) {
             FlashlightService.turn(this, true)
         }
     }
@@ -155,12 +148,21 @@ class FloatingWindowService : LifecycleService() {
     companion object {
         private const val ACTION_TOGGLE = "toggle"
 
+        const val EXTRA_TURN_ON_THE_FLASHLIGHT = "turn_on_the_flashlight"
+        const val EXTRA_CLOSE_WITH_THE_FLASHLIGHT = "close_with_the_flashlight"
+
         private fun getPureIntent(context: Context): Intent {
             return Intent(context, FloatingWindowService::class.java)
         }
 
-        fun getToggleIntent(context: Context): Intent {
+        fun getToggleIntent(
+            context: Context,
+            turnOnTheFlashlight: Boolean = false,
+            closeWithTheFlashlight: Boolean = false,
+        ): Intent {
             return getPureIntent(context).setAction(ACTION_TOGGLE)
+                .putExtra(EXTRA_TURN_ON_THE_FLASHLIGHT, turnOnTheFlashlight)
+                .putExtra(EXTRA_CLOSE_WITH_THE_FLASHLIGHT, closeWithTheFlashlight)
         }
     }
 }

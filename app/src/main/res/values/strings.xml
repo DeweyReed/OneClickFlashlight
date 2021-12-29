@@ -50,10 +50,8 @@
     <string name="shortcuts_floating_window_key" translatable="false">key_shortcuts_floating_window</string>
     <string name="shortcuts_floating_window_title">Floating Window</string>
     <string name="shortcuts_floating_window_desp">A floating button to control the flashlight.</string>
-    <string name="shortcuts_floating_window_turn_on_the_flashlight_key" translatable="false">key_shortcuts_floating_window_turn_on_the_flashlight</string>
     <string name="shortcuts_floating_window_turn_on_the_flashlight_title">Turn on the flashlight</string>
     <string name="shortcuts_floating_window_turn_on_the_flashlight_desp">When opening the floating window, turn on the flashlight</string>
-    <string name="shortcuts_floating_window_close_with_the_flashlight_key" translatable="false">key_shortcuts_floating_window_close_with_the_flashlight</string>
     <string name="shortcuts_floating_window_close_with_the_flashlight_title">Close with the flashlight</string>
     <string name="shortcuts_floating_window_close_with_the_flashlight_desp">Close the floating window and the flashlight at the same time</string>
     <string name="floating_window_service_title">One-Click Flashlight Floating Window</string>

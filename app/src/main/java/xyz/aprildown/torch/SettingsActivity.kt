@@ -19,6 +19,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import xyz.aprildown.torch.databinding.DialogDelayInputBinding
+import xyz.aprildown.torch.databinding.DialogFloatingWindowBinding
 
 class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,7 +72,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
         findPreference<Preference>(getString(R.string.shortcuts_delayed_anti_touch_key))
             ?.setOnPreferenceClickListener {
                 context.requestDelay {
-                    context.pinShortcut(FlashlightShortcut.DelayedAntiTouch, delayInMilli = it)
+                    context.pinShortcut(
+                        FlashlightShortcut.DelayedAntiTouch,
+                        delayedAntiTouchDelayInMilli = it
+                    )
                 }
                 true
             }
@@ -94,7 +98,24 @@ class SettingsFragment : PreferenceFragmentCompat() {
         findPreference<Preference>(getString(R.string.shortcuts_floating_window_key))
             ?.setOnPreferenceClickListener {
                 if (Settings.canDrawOverlays(context)) {
-                    context.pinShortcut(FlashlightShortcut.FloatingWindow)
+                    val binding = DialogFloatingWindowBinding.inflate(LayoutInflater.from(context))
+                    binding.layoutTurnOnTheFlashlight.setOnClickListener {
+                        binding.switchTurnOnTheFlashlight.toggle()
+                    }
+                    binding.layoutCloseWithTheFlashlight.setOnClickListener {
+                        binding.switchCloseWithTheFlashlight.toggle()
+                    }
+                    MaterialAlertDialogBuilder(context)
+                        .setView(binding.root)
+                        .setTitle(R.string.shortcuts_floating_window_title)
+                        .setPositiveButton(android.R.string.ok) { _, _ ->
+                            context.pinShortcut(
+                                FlashlightShortcut.FloatingWindow,
+                                floatingWindowTurnOnTheFlashlight = binding.switchCloseWithTheFlashlight.isChecked,
+                                floatingWindowCloseWithTheFlashlight = binding.switchCloseWithTheFlashlight.isChecked,
+                            )
+                        }
+                        .show()
                 } else {
                     manageOverlayPermissionLauncher.launch(
                         Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)

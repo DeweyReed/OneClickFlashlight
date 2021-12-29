@@ -18,7 +18,19 @@ class MainActivity : Activity() {
                 Toast.makeText(this, R.string.shortcut_created, Toast.LENGTH_SHORT).show()
             }
             ACTION_FLOATING_WINDOW -> {
-                startService(FloatingWindowService.getToggleIntent(this))
+                startService(
+                    FloatingWindowService.getToggleIntent(
+                        this,
+                        turnOnTheFlashlight = intent?.getBooleanExtra(
+                            FloatingWindowService.EXTRA_TURN_ON_THE_FLASHLIGHT,
+                            false
+                        ) ?: false,
+                        closeWithTheFlashlight = intent?.getBooleanExtra(
+                            FloatingWindowService.EXTRA_CLOSE_WITH_THE_FLASHLIGHT,
+                            false
+                        ) ?: false
+                    )
+                )
             }
             else -> {
                 FlashlightService.toggle(this)
@@ -45,8 +57,17 @@ class MainActivity : Activity() {
             ).intentSender
         }
 
-        fun getFloatingWindowIntent(context: Context): Intent {
+        fun getFloatingWindowIntent(
+            context: Context,
+            turnOnTheFlashlight: Boolean = false,
+            closeWithTheFlashlight: Boolean = false,
+        ): Intent {
             return getIntent(context).setAction(ACTION_FLOATING_WINDOW)
+                .putExtra(FloatingWindowService.EXTRA_TURN_ON_THE_FLASHLIGHT, turnOnTheFlashlight)
+                .putExtra(
+                    FloatingWindowService.EXTRA_CLOSE_WITH_THE_FLASHLIGHT,
+                    closeWithTheFlashlight
+                )
         }
     }
 }

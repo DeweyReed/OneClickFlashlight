@@ -7,15 +7,19 @@ import androidx.core.graphics.drawable.IconCompat
 
 fun Context.pinShortcut(
     type: FlashlightShortcut,
-    delayInMilli: Long = 0L
+
+    delayedAntiTouchDelayInMilli: Long = 0L,
+
+    floatingWindowTurnOnTheFlashlight: Boolean = false,
+    floatingWindowCloseWithTheFlashlight: Boolean = false,
 ) {
     ShortcutManagerCompat.requestPinShortcut(
         this,
         ShortcutInfoCompat.Builder(this, System.currentTimeMillis().toString())
             .setShortLabel(
                 buildString {
-                    if (type == FlashlightShortcut.DelayedAntiTouch && delayInMilli > 0L) {
-                        append(delayInMilli / 1000L)
+                    if (type == FlashlightShortcut.DelayedAntiTouch && delayedAntiTouchDelayInMilli > 0L) {
+                        append(delayedAntiTouchDelayInMilli / 1000L)
                         append("s")
                     }
                     append(getText(type.nameRes))
@@ -36,7 +40,7 @@ fun Context.pinShortcut(
                         AntiTouchActivity.getIntent(
                             context = this@pinShortcut,
                             type = type,
-                            delayInMilli = delayInMilli
+                            delayInMilli = delayedAntiTouchDelayInMilli
                         )
                     }
                     FlashlightShortcut.BrightScreen,
@@ -44,7 +48,11 @@ fun Context.pinShortcut(
                         BrightScreenActivity.getIntent(this@pinShortcut, type)
                     }
                     FlashlightShortcut.FloatingWindow -> {
-                        MainActivity.getFloatingWindowIntent(this@pinShortcut)
+                        MainActivity.getFloatingWindowIntent(
+                            this@pinShortcut,
+                            turnOnTheFlashlight = floatingWindowTurnOnTheFlashlight,
+                            closeWithTheFlashlight = floatingWindowCloseWithTheFlashlight,
+                        )
                     }
                 }.run {
                     if (action.isNullOrBlank()) {
