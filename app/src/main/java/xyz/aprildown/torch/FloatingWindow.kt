@@ -11,6 +11,8 @@ import android.content.res.Resources
 import android.graphics.PixelFormat
 import android.hardware.camera2.CameraManager
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
@@ -23,10 +25,15 @@ import androidx.core.widget.ImageViewCompat
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleService
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlin.math.abs
 
 class FloatingWindowService : LifecycleService() {
+
+    private val mainHandler = Handler(Looper.getMainLooper())
 
     private var isRunning = false
     private var turnOnTheFlashlight = false
@@ -94,54 +101,67 @@ class FloatingWindowService : LifecycleService() {
         // UI
         val cm = getSystemService(Context.CAMERA_SERVICE) as CameraManager
 
+        val receivedEnabled = mutableListOf<Boolean>()
+
         /** [CameraManager.registerTorchCallback] */
-        var ignoreEvent = true
         val torchCallback = object : CameraManager.TorchCallback() {
             override fun onTorchModeChanged(cameraId: String, enabled: Boolean) {
-                ImageViewCompat.setImageTintList(
-                    fab,
-                    ColorStateList.valueOf(
-                        ContextCompat.getColor(
-                            this@FloatingWindowService,
-                            if (enabled) {
-                                R.color.colorSecondary
-                            } else {
-                                android.R.color.white
-                            }
+                mainHandler.post {
+                    receivedEnabled += enabled
+
+                    ImageViewCompat.setImageTintList(
+                        fab,
+                        ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                this@FloatingWindowService,
+                                if (enabled) {
+                                    R.color.colorSecondary
+                                } else {
+                                    android.R.color.white
+                                }
+                            )
                         )
                     )
-                )
-                if (!ignoreEvent && !enabled && closeWithTheFlashlight) {
-                    stopSelf()
+
+                    if (closeWithTheFlashlight) {
+                        if (turnOnTheFlashlight) {
+                            if (receivedEnabled.lastOrNull() == false &&
+                                receivedEnabled.contains(true)
+                            ) {
+                                stopSelf()
+                            }
+                        } else {
+                            if (receivedEnabled.size > 1 && receivedEnabled.lastOrNull() == false) {
+                                stopSelf()
+                            }
+                        }
+                    }
                 }
-                ignoreEvent = false
             }
         }
-        var floater: Floater? = null
-        lifecycle.addObserver(
-            object : DefaultLifecycleObserver {
-                override fun onCreate(owner: LifecycleOwner) {
-                    floater = Floater(
-                        context = this@FloatingWindowService,
-                        view = fab
-                    )
-                    floater?.show()
-                    ignoreEvent = true
-                    cm.registerTorchCallback(torchCallback, null)
-                    isRunning = true
-                }
 
-                override fun onDestroy(owner: LifecycleOwner) {
-                    cm.unregisterTorchCallback(torchCallback)
-                    floater?.dismiss()
-                    floater = null
-                    isRunning = false
-                }
+        lifecycleScope.launch(Dispatchers.Main.immediate) {
+            if (turnOnTheFlashlight && !cm.isTorchOn()) {
+                FlashlightService.turn(this@FloatingWindowService, true)
             }
-        )
 
-        if (turnOnTheFlashlight) {
-            FlashlightService.turn(this, true)
+            val floater = Floater(
+                context = this@FloatingWindowService,
+                view = fab
+            )
+            floater.show()
+            cm.registerTorchCallback(torchCallback, null)
+            isRunning = true
+
+            lifecycle.addObserver(
+                object : DefaultLifecycleObserver {
+                    override fun onDestroy(owner: LifecycleOwner) {
+                        cm.unregisterTorchCallback(torchCallback)
+                        floater.dismiss()
+                        isRunning = false
+                    }
+                }
+            )
         }
     }
 
