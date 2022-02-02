@@ -107,7 +107,6 @@ class FloatingWindowService : LifecycleService() {
         val torchCallback = object : CameraManager.TorchCallback() {
             override fun onTorchModeChanged(cameraId: String, enabled: Boolean) {
                 mainHandler.post {
-                    receivedEnabled += enabled
 
                     ImageViewCompat.setImageTintList(
                         fab,
@@ -124,6 +123,8 @@ class FloatingWindowService : LifecycleService() {
                     )
 
                     if (closeWithTheFlashlight) {
+                        receivedEnabled += enabled
+
                         if (turnOnTheFlashlight) {
                             if (receivedEnabled.lastOrNull() == false &&
                                 receivedEnabled.contains(true)
