@@ -9,8 +9,8 @@ ext {
             min_sdk              : 23,
             target_sdk           : 31,
 
-            version_code         : 60,
-            version_name         : '0.6.0',
+            version_code         : 61,
+            version_name         : '0.6.1',
     ]
     libs = [
             kotlin_coroutines_core     : 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0',
