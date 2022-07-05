@@ -22,7 +22,7 @@
 
     <string name="shortcuts_anti_touch_title">防触碰</string>
     <string name="shortcuts_anti_touch_desp">闪光灯 + 显示一个窗口阻止你触摸屏幕。</string>
-    <string name="anti_touch_hint">按击音量下键关闭此界面\n这不会修改你的音量设置</string>
+    <string name="anti_touch_hint">按击音量键关闭此界面</string>
 
     <string name="shortcuts_ephemeral_anti_touch_title">临时防触碰</string>
     <string name="shortcuts_ephemeral_anti_touch_desp">防触碰 + 在关闭手机屏幕时，立即关闭闪光灯。</string>

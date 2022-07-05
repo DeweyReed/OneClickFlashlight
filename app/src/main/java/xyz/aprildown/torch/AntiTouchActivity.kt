@@ -112,12 +112,23 @@ class AntiTouchActivity : AppCompatActivity() {
         }
     }
 
-    override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
-        if (event?.action == KeyEvent.ACTION_UP && event.keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN ||
+            keyCode == KeyEvent.KEYCODE_VOLUME_UP
+        ) {
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN ||
+            keyCode == KeyEvent.KEYCODE_VOLUME_UP
+        ) {
             done()
             return true
         }
-        return super.dispatchKeyEvent(event)
+        return super.onKeyUp(keyCode, event)
     }
 
     private fun on() {

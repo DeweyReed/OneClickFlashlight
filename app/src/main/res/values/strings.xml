@@ -24,7 +24,7 @@
     <string name="shortcuts_anti_touch_key" translatable="false">key_shortcuts_anti_touch</string>
     <string name="shortcuts_anti_touch_title">Anti Touch</string>
     <string name="shortcuts_anti_touch_desp">Flashlight + The app will prevent you from touching the screen by showing an overlay.</string>
-    <string name="anti_touch_hint">Press the volume down button to close this screen.\nIt won\'t adjust your volume settings.</string>
+    <string name="anti_touch_hint">Press the volume buttons to close this screen</string>
 
     <string name="shortcuts_ephemeral_anti_touch_key" translatable="false">key_shortcuts_ephemeral_anti_touch</string>
     <string name="shortcuts_ephemeral_anti_touch_title">Ephemeral Anti Touch</string>
